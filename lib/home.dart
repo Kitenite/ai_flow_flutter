@@ -1,3 +1,4 @@
+import 'package:ai_flow/camera.dart';
 import 'package:ai_flow/camera1.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,10 @@ class _HomePageState extends State<HomePage> {
         child: Center(
             child: ElevatedButton(
           onPressed: () async {
-            await availableCameras().then((value) => Navigator.push(context,
-                MaterialPageRoute(builder: (_) => CameraPage(cameras: value))));
+            await availableCameras().then((value) => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => CameraExampleHome(cameras: value))));
           },
           child: const Text("Take a Picture"),
         )),

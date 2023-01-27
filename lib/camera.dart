@@ -11,15 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:video_player/video_player.dart';
 
-/// Camera example home widget.
 class CameraExampleHome extends StatefulWidget {
-  /// Default Constructor
-  const CameraExampleHome({Key? key}) : super(key: key);
+  const CameraExampleHome({Key? key, required this.cameras}) : super(key: key);
+
+  final List<CameraDescription>? cameras;
 
   @override
-  State<CameraExampleHome> createState() {
-    return _CameraExampleHomeState();
-  }
+  State<CameraExampleHome> createState() => _CameraExampleHomeState();
 }
 
 /// Returns a suitable camera icon for [direction].
@@ -583,13 +581,13 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
       onNewCameraSelected(description);
     }
 
-    if (_cameras.isEmpty) {
+    if (widget.cameras!.isEmpty) {
       SchedulerBinding.instance.addPostFrameCallback((_) async {
         showInSnackBar('No camera found.');
       });
       return const Text('None');
     } else {
-      for (final CameraDescription cameraDescription in _cameras) {
+      for (final CameraDescription cameraDescription in widget.cameras!) {
         toggles.add(
           SizedBox(
             width: 90.0,
@@ -1052,18 +1050,3 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     showInSnackBar('Error: ${e.code}\n${e.description}');
   }
 }
-
-/// CameraApp is the Main Application.
-class CameraApp extends StatelessWidget {
-  /// Default Constructor
-  const CameraApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: CameraExampleHome(),
-    );
-  }
-}
-
-List<CameraDescription> _cameras = <CameraDescription>[];
