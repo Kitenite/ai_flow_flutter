@@ -5,6 +5,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:ai_flow/preview.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -727,6 +728,13 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
         });
         if (file != null) {
           showInSnackBar('Picture saved to ${file.path}');
+          // Go to preview
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PreviewPage(
+                        picture: file,
+                      )));
         }
       }
     });
