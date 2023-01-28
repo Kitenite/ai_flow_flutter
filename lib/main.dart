@@ -11,10 +11,19 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Camera Demo',
+    return MaterialApp(
+      title: 'Ai Flow',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const HomePage(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        /* light theme settings */
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        /* dark theme settings */
+      ),
+      themeMode: ThemeMode.dark,
     );
   }
 }
