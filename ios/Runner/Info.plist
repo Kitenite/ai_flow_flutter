@@ -51,5 +51,7 @@
 	<string>Need camera to scan text from images</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Need microphone to get text from voice</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need photo library to scan text from images</string>
 </dict>
 </plist>
