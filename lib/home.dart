@@ -11,47 +11,66 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Ai Flow"),
-          centerTitle: false,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.account_circle),
-              tooltip: 'Profile button',
-              onPressed: () {
-                print("Profile button pressed");
-              },
+      appBar: AppBar(
+        title: const Text("Ai Flow"),
+        centerTitle: false,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.account_circle),
+            tooltip: 'Profile button',
+            onPressed: () {
+              print("Profile button pressed");
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: const <Widget>[
+          Expanded(
+            child: SelectAppGridView(
+              title: "Your apps",
+              apps: [
+                "App1",
+                "App1",
+                "App1",
+                "App1",
+                "App1",
+              ],
             ),
-          ],
+          ),
+          Expanded(
+            child: SelectAppGridView(
+              title: "Marketplace",
+              apps: [
+                "App1",
+                "App1",
+                "App1",
+                "App1",
+                "App1",
+              ],
+            ),
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        backgroundColor: Colors.purple,
+        child: const Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem(
+          label: "Home",
+          icon: Icon(Icons.home),
         ),
-        body: Column(
-          children: const <Widget>[
-            Expanded(
-              child: SelectAppGridView(
-                title: "Eat ass",
-                apps: [
-                  "App1",
-                  "App1",
-                  "App1",
-                  "App1",
-                  "App1",
-                ],
-              ),
-            ),
-            Expanded(
-              child: SelectAppGridView(
-                title: "Make money",
-                apps: [
-                  "App1",
-                  "App1",
-                  "App1",
-                  "App1",
-                  "App1",
-                ],
-              ),
-            ),
-          ],
-        ));
+        BottomNavigationBarItem(
+          label: "Settings",
+          icon: Icon(Icons.settings),
+        ),
+      ]),
+    );
   }
 }
 
