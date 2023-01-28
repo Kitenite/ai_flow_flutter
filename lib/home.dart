@@ -27,26 +27,28 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: const <Widget>[
           Expanded(
-            child: SelectAppGridView(
+            child: SelectAppletGridView(
               title: "Your apps",
-              apps: [
-                "App1",
-                "App1",
-                "App1",
-                "App1",
-                "App1",
+              applets: [
+                "My app title",
+                "My app title",
+                "My app title",
+                "My app title",
+                "My app title",
+                "My app title",
               ],
             ),
           ),
           Expanded(
-            child: SelectAppGridView(
+            child: SelectAppletGridView(
               title: "Marketplace",
-              apps: [
-                "App1",
-                "App1",
-                "App1",
-                "App1",
-                "App1",
+              applets: [
+                "My app title",
+                "My app title",
+                "My app title",
+                "My app title",
+                "My app title",
+                "My app title",
               ],
             ),
           ),
@@ -55,12 +57,13 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your onPressed code here!
+          // Nav to creation screen
         },
-        backgroundColor: Colors.purple,
+        backgroundColor: Color.fromARGB(255, 128, 81, 209),
+        foregroundColor: Colors.white,
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: [
+      bottomNavigationBar: BottomNavigationBar(items: const [
         BottomNavigationBarItem(
           label: "Home",
           icon: Icon(Icons.home),
@@ -74,15 +77,15 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class SelectAppGridView extends StatelessWidget {
-  const SelectAppGridView({
+class SelectAppletGridView extends StatelessWidget {
+  const SelectAppletGridView({
     super.key,
     required this.title,
-    required this.apps,
+    required this.applets,
   });
 
   final String title;
-  final List<String> apps;
+  final List<String> applets;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +93,16 @@ class SelectAppGridView extends StatelessWidget {
       children: [
         Align(
           alignment: Alignment.centerLeft,
-          child: Text(title),
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
         Expanded(
           child: GridView.count(
@@ -100,16 +112,54 @@ class SelectAppGridView extends StatelessWidget {
             crossAxisSpacing: 10,
             padding: const EdgeInsets.all(10.0),
             children: <Widget>[
-              for (var app in apps)
-                Container(
-                  padding: const EdgeInsets.all(1),
-                  color: Colors.teal[100],
-                  child: Text(app),
-                ),
+              for (var app in applets) AppletIcon(app: app),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class AppletIcon extends StatelessWidget {
+  const AppletIcon({
+    super.key,
+    required this.app,
+  });
+
+  final String app;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        // Nav to applet
+      },
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 4.0,
+                ), //Border.all
+                /*** The BorderRadius widget  is here ***/
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+              child: const Icon(
+                Icons.text_fields_sharp,
+              ),
+            ),
+            Text(app),
+          ],
+        ),
+      ),
     );
   }
 }
