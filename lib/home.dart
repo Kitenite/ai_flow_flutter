@@ -12,11 +12,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ai Flow"),
+        title: const Text(
+          "Ai Flow",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.account_circle),
+            color: Colors.black,
             tooltip: 'Profile button',
             onPressed: () {
               print("Profile button pressed");
@@ -30,6 +39,12 @@ class _HomePageState extends State<HomePage> {
             child: SelectAppletGridView(
               title: "Your apps",
               applets: [
+                "My app title",
+                "My app title",
+                "My app title",
+                "My app title",
+                "My app title",
+                "My app title",
                 "My app title",
                 "My app title",
                 "My app title",
@@ -104,6 +119,10 @@ class SelectAppletGridView extends StatelessWidget {
             ),
           ),
         ),
+        const Divider(
+          color: Colors.black,
+          thickness: 2,
+        ),
         Expanded(
           child: GridView.count(
             crossAxisCount: 2,
@@ -140,20 +159,27 @@ class AppletIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              margin: const EdgeInsets.all(15.0),
-              padding: const EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 4.0,
-                ), //Border.all
-                /*** The BorderRadius widget  is here ***/
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
+            Expanded(
+              child: FractionallySizedBox(
+                heightFactor: 0.5,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 2.0,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                  ),
+                  child: FittedBox(
+                    child: Container(
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Icon(
+                        Icons.text_fields_sharp,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              child: const Icon(
-                Icons.text_fields_sharp,
               ),
             ),
             Text(app),

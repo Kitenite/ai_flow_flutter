@@ -23,7 +23,7 @@ class App extends StatelessWidget {
         brightness: Brightness.dark,
         /* dark theme settings */
       ),
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
     );
   }
 }
