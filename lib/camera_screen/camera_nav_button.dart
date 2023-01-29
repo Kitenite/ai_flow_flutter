@@ -1,4 +1,4 @@
-import 'package:ai_flow/camera.dart';
+import 'package:ai_flow/camera_screen/camera.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
