@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.account_circle),
+            icon: const Icon(Icons.account_circle_outlined),
             color: Colors.black,
             tooltip: 'Profile button',
             onPressed: () {
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
         children: const <Widget>[
           Expanded(
             child: SelectAppletGridView(
-              title: "Your apps",
+              title: "Your Apps",
               applets: [
                 "My app title",
                 "My app title",
@@ -66,6 +66,9 @@ class _HomePageState extends State<HomePage> {
                 "My app title",
               ],
             ),
+          ),
+          SizedBox(
+            height: kBottomNavigationBarHeight,
           ),
         ],
       ),
@@ -131,7 +134,7 @@ class SelectAppletGridView extends StatelessWidget {
             crossAxisSpacing: 10,
             padding: const EdgeInsets.all(10.0),
             children: <Widget>[
-              for (var app in applets) AppletIcon(app: app),
+              for (var app in applets) AppletPreviewButton(app: app),
             ],
           ),
         ),
@@ -140,8 +143,8 @@ class SelectAppletGridView extends StatelessWidget {
   }
 }
 
-class AppletIcon extends StatelessWidget {
-  const AppletIcon({
+class AppletPreviewButton extends StatelessWidget {
+  const AppletPreviewButton({
     super.key,
     required this.app,
   });
@@ -161,21 +164,30 @@ class AppletIcon extends StatelessWidget {
           children: [
             Expanded(
               child: FractionallySizedBox(
-                heightFactor: 0.5,
+                heightFactor: 0.65,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
+                    color: Colors.white,
                     border: Border.all(
-                      width: 2.0,
+                      width: 1.0,
                     ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black38,
+                        offset: Offset(0.0, 1.0),
+                        blurRadius: 1.0,
+                        spreadRadius: 1.0,
+                      ),
+                    ],
                     borderRadius: const BorderRadius.all(
-                      Radius.circular(8),
+                      Radius.circular(4),
                     ),
                   ),
                   child: FittedBox(
                     child: Container(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: const Icon(
-                        Icons.text_fields_sharp,
+                        Icons.abc,
                       ),
                     ),
                   ),
