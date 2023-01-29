@@ -22,23 +22,13 @@ class AppletPreviewButton extends StatelessWidget {
             Expanded(
               child: FractionallySizedBox(
                 heightFactor: 0.65,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                      width: 1.0,
+                child: Card(
+                  elevation: 2,
+                  shape: const RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Colors.black,
                     ),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black38,
-                        offset: Offset(0.0, 1.0),
-                        blurRadius: 1.0,
-                        spreadRadius: 1.0,
-                      ),
-                    ],
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(4),
-                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: FittedBox(
                     child: Container(
