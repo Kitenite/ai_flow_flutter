@@ -1,3 +1,4 @@
+import 'package:ai_flow/create_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -54,6 +55,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+          SizedBox(height: 20),
           Expanded(
             child: SelectAppletGridView(
               title: "Marketplace",
@@ -75,9 +77,12 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Nav to creation screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateScreen()),
+          );
         },
-        backgroundColor: Color.fromARGB(255, 128, 81, 209),
+        backgroundColor: const Color.fromARGB(255, 128, 81, 209),
         foregroundColor: Colors.white,
         child: const Icon(Icons.add),
       ),
@@ -185,9 +190,9 @@ class AppletPreviewButton extends StatelessWidget {
                   ),
                   child: FittedBox(
                     child: Container(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: const Icon(
-                        Icons.abc,
+                        Icons.edit_note,
                       ),
                     ),
                   ),

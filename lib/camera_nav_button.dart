@@ -12,10 +12,14 @@ class CameraNavButton extends StatelessWidget {
     return Center(
         child: ElevatedButton(
       onPressed: () async {
-        await availableCameras().then((value) => Navigator.push(
+        await availableCameras().then(
+          (value) => Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => CameraExampleHome(cameras: value))));
+              builder: (_) => CameraExampleHome(cameras: value),
+            ),
+          ),
+        );
       },
       child: const Text("Take a Picture"),
     ));
