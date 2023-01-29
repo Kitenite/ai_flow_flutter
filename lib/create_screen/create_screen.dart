@@ -38,7 +38,8 @@ class CreateAppletFormState extends State<CreateAppletForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
-  String? _appletNameText;
+  final _appletNameController = TextEditingController();
+  final _appletPromptController = TextEditingController();
   String? _selectedInputType;
   String? _selectedOutputType;
   final List<String> _inputTypes = ['Text', 'Image', 'Audio'];
@@ -52,6 +53,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
+            controller: _appletNameController,
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
               hintText: 'Name your app',
@@ -59,6 +61,19 @@ class CreateAppletFormState extends State<CreateAppletForm> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter app name';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: _appletPromptController,
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              hintText: 'Add your prompt',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a prompt';
               }
               return null;
             },
@@ -133,8 +148,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
               onPressed: () {
                 // Validate returns true if the form is valid, or false otherwise.
                 if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
+                  // Create app with all that information here
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Creating your app')),
                   );
