@@ -19,7 +19,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Ai Flow',
-      initialRoute: runRoute,
+      initialRoute: homeRoute,
       routes: {
         homeRoute: (context) => const HomePage(),
         createRoute: (context) => const CreateScreen(),

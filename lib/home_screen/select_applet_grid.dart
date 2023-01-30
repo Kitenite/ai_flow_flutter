@@ -1,4 +1,5 @@
 import 'package:ai_flow/home_screen/applet_preview.dart';
+import 'package:ai_flow/run_screen/run_screen.dart';
 import 'package:flutter/material.dart';
 
 class SelectAppletGridView extends StatelessWidget {
@@ -9,7 +10,7 @@ class SelectAppletGridView extends StatelessWidget {
   });
 
   final String title;
-  final List<String> applets;
+  final List<Applet> applets;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class SelectAppletGridView extends StatelessWidget {
             crossAxisSpacing: 10,
             padding: const EdgeInsets.all(10.0),
             children: <Widget>[
-              for (var app in applets) AppletPreviewButton(app: app),
+              for (var applet in applets) AppletPreviewButton(applet: applet),
             ],
           ),
         ),

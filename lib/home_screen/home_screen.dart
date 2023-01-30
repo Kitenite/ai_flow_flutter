@@ -1,5 +1,6 @@
 import 'package:ai_flow/create_screen/create_screen.dart';
 import 'package:ai_flow/home_screen/select_applet_grid.dart';
+import 'package:ai_flow/run_screen/run_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,6 +11,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Applet> exampleApplets = [
+    Applet(
+        name: "Vegan ingredients",
+        prompt:
+            "Look at this list of recipes. For each ingredient, explain the ingredients in 1-2 sentences and say if they are vegan. Then at the end, say whether all the ingredients are vegan or not vegan: ",
+        description:
+            "Takes a list of ingredients and say whether or not it's vegan",
+        inputType: InputType.text,
+        outputType: OutputType.text,
+        inputPrompt: "Add your list of ingredients here"),
+    Applet(
+        name: "Ask me anything",
+        prompt:
+            "Look at this list of recipes. For each ingredient, explain the ingredients in 1-2 sentences and say if they are vegan. Then at the end, say whether all the ingredients are vegan or not vegan: ",
+        description:
+            "Takes a list of ingredients and say whether or not it's vegan",
+        inputType: InputType.image,
+        outputType: OutputType.text,
+        inputPrompt: "Add your list of ingredients here"),
+    Applet(
+        name: "Reply to email",
+        prompt:
+            "Look at this list of recipes. For each ingredient, explain the ingredients in 1-2 sentences and say if they are vegan. Then at the end, say whether all the ingredients are vegan or not vegan: ",
+        description:
+            "Takes a list of ingredients and say whether or not it's vegan",
+        inputType: InputType.audio,
+        outputType: OutputType.text,
+        inputPrompt: "Add your list of ingredients here"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,41 +67,21 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Column(
-        children: const <Widget>[
+        children: <Widget>[
           Expanded(
             child: SelectAppletGridView(
               title: "Your Apps",
-              applets: [
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-              ],
+              applets: exampleApplets,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Expanded(
             child: SelectAppletGridView(
               title: "Marketplace",
-              applets: [
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-                "My app title",
-              ],
+              applets: exampleApplets,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: kBottomNavigationBarHeight,
           ),
         ],
@@ -87,16 +98,6 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Colors.white,
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(
-          label: "Home",
-          icon: Icon(Icons.home),
-        ),
-        BottomNavigationBarItem(
-          label: "Settings",
-          icon: Icon(Icons.settings),
-        ),
-      ]),
     );
   }
 }
