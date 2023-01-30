@@ -188,7 +188,29 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                             // Create app with all that information here
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text('Creating your app')),
+                                content: Text('Testing your app'),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Test'),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Visibility(
+                    visible: _submitButtonVisible,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Validate returns true if the form is valid, or false otherwise.
+                          if (_formKey.currentState!.validate()) {
+                            // Create app with all that information here
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Creating your app'),
+                              ),
                             );
                           }
                         },
