@@ -25,12 +25,14 @@ class App extends StatelessWidget {
         createRoute: (context) => const CreateScreen(),
         runRoute: (context) => RunScreen(
               applet: Applet(
-                prompt: "prompt",
-                name: "name",
-                description: "description",
-                inputType: InputType.text,
-                outputType: OutputType.text,
-              ),
+                  name: "Vegan ingredients",
+                  prompt:
+                      "Look at this list of recipes. For each ingredient, explain the ingredients in 1-2 sentences and say if they are vegan. Then at the end, say whether all the ingredients are vegan or not vegan: ",
+                  description:
+                      "Takes a list of ingredients and say whether or not it's vegan",
+                  inputType: InputType.text,
+                  outputType: OutputType.text,
+                  inputPrompt: "Add your list of ingredients here"),
             ),
       },
       debugShowCheckedModeBanner: false,

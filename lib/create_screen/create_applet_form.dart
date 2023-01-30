@@ -169,7 +169,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
+                    child: OutlinedButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
