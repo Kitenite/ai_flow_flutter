@@ -11,13 +11,22 @@ class CreateAppletForm extends StatefulWidget {
 
 class CreateAppletFormState extends State<CreateAppletForm> {
   final _formKey = GlobalKey<FormState>();
-
-  final _appletNameController = TextEditingController();
-  final _appletPromptController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _promptController = TextEditingController();
   String? _selectedInputType;
   String? _selectedOutputType;
   final List<String> _inputTypes = ['Text', 'Image', 'Audio'];
   final List<String> _outputTypes = ['Text', 'Image', 'Audio'];
+
+  var _promptFieldVisible = false;
+  var _inputFieldVisible = false;
+  var _outputFieldVisible = false;
+  var _submitButtonVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +41,8 @@ class CreateAppletFormState extends State<CreateAppletForm> {
               AppletInputCard(
                 title: "App Name",
                 child: TextFormField(
-                  controller: _appletNameController,
+                  autofocus: true,
+                  controller: _nameController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     hintText: 'Name your app',
@@ -41,14 +51,26 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter app name';
                     }
+                    setState(() {
+                      _promptFieldVisible = true;
+                    });
                     return null;
                   },
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      setState(() {
+                        _promptFieldVisible = true;
+                      });
+                    }
+                  },
+                  textInputAction: TextInputAction.next,
                 ),
               ),
               AppletInputCard(
+                visible: _promptFieldVisible,
                 title: "Prompt",
                 child: TextFormField(
-                  controller: _appletPromptController,
+                  controller: _promptController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     hintText: 'Add your prompt',
@@ -59,9 +81,17 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                     }
                     return null;
                   },
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      setState(() {
+                        _inputFieldVisible = true;
+                      });
+                    }
+                  },
                 ),
               ),
               AppletInputCard(
+                visible: _inputFieldVisible,
                 title: "Input",
                 child: DropdownButtonFormField(
                   value: _selectedInputType,
@@ -72,6 +102,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                   onChanged: (String? value) {
                     setState(() {
                       _selectedInputType = value;
+                      _outputFieldVisible = true;
                     });
                   },
                   onSaved: (value) {
@@ -97,6 +128,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                 ),
               ),
               AppletInputCard(
+                visible: _outputFieldVisible,
                 title: "Output",
                 child: DropdownButtonFormField(
                   value: _selectedOutputType,
@@ -107,6 +139,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                   onChanged: (String? value) {
                     setState(() {
                       _selectedOutputType = value;
+                      _submitButtonVisible = true;
                     });
                   },
                   onSaved: (value) {
@@ -144,19 +177,23 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                     ),
                   ),
                   const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate()) {
-                          // Create app with all that information here
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Creating your app')),
-                          );
-                        }
-                      },
-                      child: const Text('Submit'),
+                  Visibility(
+                    visible: _submitButtonVisible,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Validate returns true if the form is valid, or false otherwise.
+                          if (_formKey.currentState!.validate()) {
+                            // Create app with all that information here
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Creating your app')),
+                            );
+                          }
+                        },
+                        child: const Text('Submit'),
+                      ),
                     ),
                   ),
                   const Spacer(),
@@ -171,40 +208,49 @@ class CreateAppletFormState extends State<CreateAppletForm> {
 }
 
 class AppletInputCard extends StatelessWidget {
-  const AppletInputCard({Key? key, required this.title, required this.child})
-      : super(key: key);
+  const AppletInputCard({
+    Key? key,
+    required this.title,
+    required this.child,
+    this.visible = true,
+  }) : super(key: key);
 
   final String title;
   final Widget child;
+  final bool visible;
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          elevation: 2,
-          shape: const RoundedRectangleBorder(
-            side: BorderSide(
-              color: Colors.black,
+    return Visibility(
+      visible: visible,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            elevation: 2,
+            shape: const RoundedRectangleBorder(
+              side: BorderSide(
+                color: Colors.black,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            margin: const EdgeInsets.all(8),
-            child: Column(children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
+              child: Column(children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              child,
-            ]),
+                child,
+              ]),
+            ),
           ),
         ),
       ),
