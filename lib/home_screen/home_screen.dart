@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(
-            height: kBottomNavigationBarHeight,
+            height: kBottomNavigationBarHeight + kRadialReactionRadius + 10,
           ),
         ],
       ),
