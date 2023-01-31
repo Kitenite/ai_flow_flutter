@@ -1,5 +1,6 @@
 import 'package:ai_flow/create_screen/create_screen.dart';
 import 'package:ai_flow/home_screen/home_screen.dart';
+import 'package:ai_flow/models/applet.dart';
 import 'package:ai_flow/run_screen/run_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -38,11 +39,9 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
-        /* light theme settings */
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        /* dark theme settings */
       ),
       themeMode: ThemeMode.light,
     );

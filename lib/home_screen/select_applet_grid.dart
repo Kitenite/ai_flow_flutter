@@ -1,5 +1,5 @@
 import 'package:ai_flow/home_screen/applet_preview.dart';
-import 'package:ai_flow/run_screen/run_screen.dart';
+import 'package:ai_flow/models/applet.dart';
 import 'package:flutter/material.dart';
 
 class SelectAppletGridView extends StatelessWidget {
