@@ -7,10 +7,12 @@ class TextInputScreen extends StatefulWidget {
     Key? key,
     required this.applet,
     this.inputText = "",
+    required this.submitCallback,
   }) : super(key: key);
 
   final Applet applet;
   final String inputText;
+  final Function(String inputText) submitCallback;
 
   @override
   State<TextInputScreen> createState() => _TextInputScreenState();
@@ -19,6 +21,36 @@ class TextInputScreen extends StatefulWidget {
 class _TextInputScreenState extends State<TextInputScreen> {
   final List<bool> _expandedListItems = [false];
   var _submitButtonVisible = false;
+  final _textInputController = TextEditingController();
+
+  Widget getPromptView() {
+    // If applet allows prompts to be displayed
+    if (widget.applet.showPrompt) {
+      return ExpansionPanelList(
+        elevation: 0,
+        expandedHeaderPadding: const EdgeInsets.all(10),
+        expansionCallback: (int index, bool isExpanded) {
+          setState(() {
+            _expandedListItems[index] = !isExpanded;
+          });
+        },
+        children: [
+          ExpansionPanel(
+            headerBuilder: (BuildContext context, bool isExpanded) {
+              return const ListTile(
+                title: Text("Show prompt"),
+              );
+            },
+            body: ListTile(
+              title: Text(widget.applet.prompt),
+            ),
+            isExpanded: _expandedListItems[0],
+          ),
+        ],
+      );
+    }
+    return const SizedBox.shrink();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +77,7 @@ class _TextInputScreenState extends State<TextInputScreen> {
         AppletInputCard(
           title: '${widget.applet.inputPrompt}:',
           child: TextFormField(
+            controller: _textInputController,
             autofocus: true,
             autocorrect: true,
             maxLines: 10,
@@ -57,28 +90,7 @@ class _TextInputScreenState extends State<TextInputScreen> {
             },
           ),
         ),
-        ExpansionPanelList(
-          elevation: 0,
-          expandedHeaderPadding: const EdgeInsets.all(10),
-          expansionCallback: (int index, bool isExpanded) {
-            setState(() {
-              _expandedListItems[index] = !isExpanded;
-            });
-          },
-          children: [
-            ExpansionPanel(
-              headerBuilder: (BuildContext context, bool isExpanded) {
-                return const ListTile(
-                  title: Text("Show prompt"),
-                );
-              },
-              body: ListTile(
-                title: Text(widget.applet.prompt),
-              ),
-              isExpanded: _expandedListItems[0],
-            ),
-          ],
-        ),
+        getPromptView(),
         Row(
           children: [
             const Spacer(),
@@ -100,9 +112,8 @@ class _TextInputScreenState extends State<TextInputScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
-                  onPressed: () {
-                    print("Submit");
-                  },
+                  onPressed: () =>
+                      widget.submitCallback(_textInputController.text),
                   child: const Text('Submit'),
                 ),
               ),

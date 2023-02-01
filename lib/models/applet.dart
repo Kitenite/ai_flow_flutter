@@ -7,6 +7,8 @@ class Applet {
   // Optional
   final String description;
   final String inputPrompt;
+  final String outputPrompt;
+  final bool showPrompt;
 
   Applet({
     required this.prompt,
@@ -15,6 +17,8 @@ class Applet {
     required this.outputType,
     this.description = "",
     this.inputPrompt = "",
+    this.outputPrompt = "",
+    this.showPrompt = true,
   });
 }
 

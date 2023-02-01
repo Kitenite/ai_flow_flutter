@@ -1,5 +1,6 @@
 import 'package:ai_flow/models/applet.dart';
 import 'package:ai_flow/run_screen/text_input_screen.dart';
+import 'package:ai_flow/run_screen/text_output_screen.dart';
 import 'package:flutter/material.dart';
 
 class RunScreen extends StatefulWidget {
@@ -15,14 +16,65 @@ class RunScreen extends StatefulWidget {
 }
 
 class RunScreenState extends State<RunScreen> {
-  Widget getInputScreen(Applet applet) {
-    switch (applet.inputType) {
+  void textInputCallback(String inputText) {
+    // TODO: Call server and wait for result using FutureBuilder
+
+    // TODO: Display result
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => Scaffold(
+          body: SafeArea(
+            child: getOutputScreen(result: "Mock result", inputText: inputText),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getOutputScreen({
+    String result = "",
+    String inputText = "",
+  }) {
+    switch (widget.applet.outputType) {
+      case OutputType.text:
+        return TextOutputScreen(
+          applet: widget.applet,
+          resultText: result,
+          inputText: inputText,
+        );
+      case OutputType.image:
+        return TextOutputScreen(
+          applet: widget.applet,
+          resultText: result,
+          inputText: inputText,
+        );
+      case OutputType.audio:
+        return TextOutputScreen(
+          applet: widget.applet,
+          resultText: result,
+          inputText: inputText,
+        );
+    }
+  }
+
+  Widget getInputScreen() {
+    switch (widget.applet.inputType) {
       case InputType.text:
-        return TextInputScreen(applet: applet);
+        return TextInputScreen(
+          applet: widget.applet,
+          submitCallback: textInputCallback,
+        );
       case InputType.image:
-        return TextInputScreen(applet: applet);
+        return TextInputScreen(
+          applet: widget.applet,
+          submitCallback: textInputCallback,
+        );
       case InputType.audio:
-        return TextInputScreen(applet: applet);
+        return TextInputScreen(
+          applet: widget.applet,
+          submitCallback: textInputCallback,
+        );
     }
   }
 
@@ -30,7 +82,7 @@ class RunScreenState extends State<RunScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: getInputScreen(widget.applet),
+        child: getInputScreen(),
       ),
     );
   }
