@@ -1,5 +1,6 @@
 import 'package:ai_flow/create_screen/create_screen.dart';
 import 'package:ai_flow/home_screen/select_applet_grid.dart';
+import 'package:ai_flow/main.dart';
 import 'package:ai_flow/models/applet.dart';
 import 'package:flutter/material.dart';
 
@@ -89,10 +90,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CreateScreen()),
-          );
+          Navigator.pushNamed(context, createRoute);
         },
         backgroundColor: const Color.fromARGB(255, 128, 81, 209),
         foregroundColor: Colors.white,

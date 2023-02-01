@@ -7,9 +7,12 @@ class RunScreen extends StatefulWidget {
   const RunScreen({
     Key? key,
     required this.applet,
+    this.originRoute = "",
   }) : super(key: key);
 
   final Applet applet;
+  // Optional route to pop back to
+  final String originRoute;
 
   @override
   RunScreenState createState() => RunScreenState();
@@ -42,18 +45,21 @@ class RunScreenState extends State<RunScreen> {
           applet: widget.applet,
           resultText: result,
           inputText: inputText,
+          originRoute: widget.originRoute,
         );
       case OutputType.image:
         return TextOutputScreen(
           applet: widget.applet,
           resultText: result,
           inputText: inputText,
+          originRoute: widget.originRoute,
         );
       case OutputType.audio:
         return TextOutputScreen(
           applet: widget.applet,
           resultText: result,
           inputText: inputText,
+          originRoute: widget.originRoute,
         );
     }
   }

@@ -1,5 +1,4 @@
 import 'package:ai_flow/components/applet_input_card.dart';
-import 'package:ai_flow/main.dart';
 import 'package:ai_flow/models/applet.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +8,15 @@ class TextOutputScreen extends StatefulWidget {
     required this.applet,
     required this.resultText,
     this.inputText = "",
+    this.originRoute = "",
   }) : super(key: key);
 
   final Applet applet;
   final String resultText;
   final String inputText;
+
+  // Optional route to pop back to
+  final String originRoute;
 
   @override
   State<TextOutputScreen> createState() => _TextOutputScreenState();
@@ -90,7 +93,12 @@ class _TextOutputScreenState extends State<TextOutputScreen> {
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: OutlinedButton(
                 onPressed: () {
-                  Navigator.popUntil(context, ModalRoute.withName(homeRoute));
+                  if (widget.originRoute.isEmpty) {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  } else {
+                    Navigator.popUntil(
+                        context, ModalRoute.withName(widget.originRoute));
+                  }
                 },
                 child: const Text('Finish'),
               ),

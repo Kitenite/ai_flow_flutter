@@ -1,5 +1,7 @@
 import 'package:ai_flow/components/applet_input_card.dart';
+import 'package:ai_flow/main.dart';
 import 'package:ai_flow/models/applet.dart';
+import 'package:ai_flow/run_screen/run_screen.dart';
 import 'package:flutter/material.dart';
 
 class CreateAppletForm extends StatefulWidget {
@@ -15,6 +17,10 @@ class CreateAppletFormState extends State<CreateAppletForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _promptController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _inputPromptController = TextEditingController();
+  final _outputPromptController = TextEditingController();
+
   InputType? _selectedInputType;
   OutputType? _selectedOutputType;
 
@@ -24,7 +30,6 @@ class CreateAppletFormState extends State<CreateAppletForm> {
   var _descriptionFormFieldVisible = false;
   var _inputPromptFieldVisible = false;
   var _outputPromptFieldVisible = false;
-
   var _submitButtonVisible = false;
 
   @override
@@ -35,27 +40,39 @@ class CreateAppletFormState extends State<CreateAppletForm> {
   String getInputHintText() {
     switch (_selectedInputType) {
       case InputType.text:
-        return "Type in your list of ingredients";
+        return "i.e. Type in your list of ingredients";
       case InputType.image:
-        return "Take a picture of your ingredients";
+        return "i.e. Take a picture of your ingredients";
       case InputType.audio:
-        return "Read your list of ingredients out loud";
+        return "i.e. Read your list of ingredients out loud";
       case null:
-        return "Input your list of ingredients";
+        return "i.e. Input your list of ingredients";
     }
   }
 
   String getOutputHintText() {
     switch (_selectedOutputType) {
       case OutputType.text:
-        return "Here's an explanation of your ingredients";
+        return "i.e. Here's an explanation of your ingredients";
       case OutputType.image:
-        return "Here's a picture illustrating what you asked for";
+        return "i.e. Here's a picture illustrating what you asked for";
       case OutputType.audio:
-        return "Here's an explanation of your ingredients";
+        return "i.e. Here's an explanation of your ingredients";
       case null:
-        return "Here's an explanation of your ingredients";
+        return "i.e. Here's an explanation of your ingredients";
     }
+  }
+
+  Applet createApplet() {
+    return Applet(
+      prompt: _promptController.text,
+      name: _nameController.text,
+      inputType: _selectedInputType ?? InputType.text,
+      outputType: _selectedOutputType ?? OutputType.text,
+      inputPrompt: _inputPromptController.text,
+      outputPrompt: _outputPromptController.text,
+      description: _descriptionController.text,
+    );
   }
 
   @override
@@ -102,13 +119,14 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                     Visibility(
                       visible: _descriptionFormFieldVisible,
                       child: TextFormField(
+                        controller: _descriptionController,
                         maxLines: 3,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText:
                                 'Optional: Describe your app to the user',
                             hintText:
-                                "This app takes a list of ingredients and tells you if its vegan"),
+                                "i.e. This app takes a list of ingredients and tells you if its vegan"),
                       ),
                     ),
                   ],
@@ -124,7 +142,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                     border: UnderlineInputBorder(),
                     labelText: 'The prompt that will be sent to GPT',
                     hintText:
-                        "Look at this list of recipes. For each ingredient, explain the ingredients in 1-2 sentences and say if they are vegan. Then at the end, say whether all the ingredients are vegan or not vegan.",
+                        "i.e. Look at this list of recipes. For each ingredient, explain the ingredients in 1-2 sentences and say if they are vegan. Then at the end, say whether all the ingredients are vegan or not vegan.",
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -183,6 +201,8 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                     Visibility(
                       visible: _inputPromptFieldVisible,
                       child: TextFormField(
+                        controller: _inputPromptController,
+                        maxLines: 2,
                         decoration: InputDecoration(
                           border: const UnderlineInputBorder(),
                           labelText: 'Optional: Tell your user what to input',
@@ -235,10 +255,13 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                     Visibility(
                       visible: _outputPromptFieldVisible,
                       child: TextFormField(
+                        controller: _outputPromptController,
+                        maxLines: 2,
                         decoration: InputDecoration(
-                            border: const UnderlineInputBorder(),
-                            labelText: 'Optional: Explain your app\'s result',
-                            hintText: getOutputHintText()),
+                          border: const UnderlineInputBorder(),
+                          labelText: 'Optional: Explain your app\'s result',
+                          hintText: getOutputHintText(),
+                        ),
                       ),
                     ),
                   ],
@@ -266,9 +289,13 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                           // Validate returns true if the form is valid, or false otherwise.
                           if (_formKey.currentState!.validate()) {
                             // TODO: Push to RunScreen with the created applet
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Testing your app'),
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => RunScreen(
+                                  applet: createApplet(),
+                                  originRoute: createRoute,
+                                ),
                               ),
                             );
                           }
