@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppletInputCard extends StatelessWidget {
   const AppletInputCard({
     Key? key,
-    required this.title,
+    this.title = '',
     required this.child,
     this.visible = true,
   }) : super(key: key);
@@ -11,6 +11,22 @@ class AppletInputCard extends StatelessWidget {
   final String title;
   final Widget child;
   final bool visible;
+
+  Widget getTitleView() {
+    if (title.isNotEmpty) {
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          title,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
+    return const SizedBox.shrink();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +47,7 @@ class AppletInputCard extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               margin: const EdgeInsets.all(8),
               child: Column(children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                getTitleView(),
                 child,
               ]),
             ),

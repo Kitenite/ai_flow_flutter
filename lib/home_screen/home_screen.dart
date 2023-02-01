@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
             color: Colors.black,
             tooltip: 'Profile button',
             onPressed: () {
-              print("Profile button pressed");
+              // TODO: Profile button
             },
           ),
         ],

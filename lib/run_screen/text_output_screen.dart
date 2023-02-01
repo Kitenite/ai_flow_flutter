@@ -50,6 +50,22 @@ class _TextOutputScreenState extends State<TextOutputScreen> {
     return const SizedBox.shrink();
   }
 
+  Widget getOutputPromptView() {
+    if (widget.applet.outputPrompt.isNotEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(15),
+        child: Text(
+          widget.applet.outputPrompt,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+          ),
+        ),
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,18 +78,8 @@ class _TextOutputScreenState extends State<TextOutputScreen> {
             fontSize: 22,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(15),
-          child: Text(
-            widget.applet.description,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-            ),
-          ),
-        ),
+        getOutputPromptView(),
         AppletInputCard(
-          title: '${widget.applet.inputPrompt}:',
           child: Text(widget.resultText),
         ),
         getInputView(),

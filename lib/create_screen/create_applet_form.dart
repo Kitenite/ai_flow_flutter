@@ -1,4 +1,5 @@
 import 'package:ai_flow/components/applet_input_card.dart';
+import 'package:ai_flow/models/applet.dart';
 import 'package:flutter/material.dart';
 
 class CreateAppletForm extends StatefulWidget {
@@ -14,19 +15,47 @@ class CreateAppletFormState extends State<CreateAppletForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _promptController = TextEditingController();
-  String? _selectedInputType;
-  String? _selectedOutputType;
-  final List<String> _inputTypes = ['Text', 'Image', 'Audio'];
-  final List<String> _outputTypes = ['Text', 'Image', 'Audio'];
+  InputType? _selectedInputType;
+  OutputType? _selectedOutputType;
 
   var _promptFieldVisible = false;
   var _inputFieldVisible = false;
   var _outputFieldVisible = false;
+  var _descriptionFormFieldVisible = false;
+  var _inputPromptFieldVisible = false;
+  var _outputPromptFieldVisible = false;
+
   var _submitButtonVisible = false;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  String getInputHintText() {
+    switch (_selectedInputType) {
+      case InputType.text:
+        return "Type in your list of ingredients";
+      case InputType.image:
+        return "Take a picture of your ingredients";
+      case InputType.audio:
+        return "Read your list of ingredients out loud";
+      case null:
+        return "Input your list of ingredients";
+    }
+  }
+
+  String getOutputHintText() {
+    switch (_selectedOutputType) {
+      case OutputType.text:
+        return "Here's an explanation of your ingredients";
+      case OutputType.image:
+        return "Here's a picture illustrating what you asked for";
+      case OutputType.audio:
+        return "Here's an explanation of your ingredients";
+      case null:
+        return "Here's an explanation of your ingredients";
+    }
   }
 
   @override
@@ -41,40 +70,61 @@ class CreateAppletFormState extends State<CreateAppletForm> {
             children: [
               AppletInputCard(
                 title: "App Name",
-                child: TextFormField(
-                  autofocus: true,
-                  controller: _nameController,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: 'Name your app',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter app name';
-                    }
-                    setState(() {
-                      _promptFieldVisible = true;
-                    });
-                    return null;
-                  },
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      setState(() {
-                        _promptFieldVisible = true;
-                      });
-                    }
-                  },
-                  textInputAction: TextInputAction.next,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      autofocus: true,
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'Name your app',
+                        hintText: 'i.e Vegan ingredients',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter app name';
+                        }
+                        setState(() {
+                          _promptFieldVisible = true;
+                        });
+                        return null;
+                      },
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          setState(() {
+                            _promptFieldVisible = true;
+                            _descriptionFormFieldVisible = true;
+                          });
+                        }
+                      },
+                      textInputAction: TextInputAction.next,
+                    ),
+                    Visibility(
+                      visible: _descriptionFormFieldVisible,
+                      child: TextFormField(
+                        maxLines: 3,
+                        decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText:
+                                'Optional: Describe your app to the user',
+                            hintText:
+                                "This app takes a list of ingredients and tells you if its vegan"),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               AppletInputCard(
                 visible: _promptFieldVisible,
-                title: "Prompt",
+                title: "Premade prompt",
                 child: TextFormField(
                   controller: _promptController,
+                  maxLines: 5,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    hintText: 'Add your prompt',
+                    labelText: 'The prompt that will be sent to GPT',
+                    hintText:
+                        "Look at this list of recipes. For each ingredient, explain the ingredients in 1-2 sentences and say if they are vegan. Then at the end, say whether all the ingredients are vegan or not vegan.",
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -93,76 +143,105 @@ class CreateAppletFormState extends State<CreateAppletForm> {
               ),
               AppletInputCard(
                 visible: _inputFieldVisible,
-                title: "Input",
-                child: DropdownButtonFormField(
-                  value: _selectedInputType,
-                  hint: const Text(
-                    'Choose an input type',
-                  ),
-                  isExpanded: true,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _selectedInputType = value;
-                      _outputFieldVisible = true;
-                    });
-                  },
-                  onSaved: (value) {
-                    setState(() {
-                      _selectedInputType = value;
-                    });
-                  },
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please choose an option";
-                    } else {
-                      return null;
-                    }
-                  },
-                  items: _inputTypes.map((String val) {
-                    return DropdownMenuItem(
-                      value: val,
-                      child: Text(
-                        val,
+                title: "Input type",
+                child: Column(
+                  children: [
+                    DropdownButtonFormField(
+                      value: _selectedInputType,
+                      hint: const Text(
+                        'Type of input your app receives',
                       ),
-                    );
-                  }).toList(),
+                      isExpanded: true,
+                      onChanged: (InputType? inputType) {
+                        setState(() {
+                          _selectedInputType = inputType;
+                          _outputFieldVisible = true;
+                          _inputPromptFieldVisible = true;
+                        });
+                      },
+                      onSaved: (value) {
+                        setState(() {
+                          _selectedInputType = value;
+                        });
+                      },
+                      validator: (InputType? inputType) {
+                        if (inputType == null) {
+                          return "Please choose an option";
+                        } else {
+                          return null;
+                        }
+                      },
+                      items: InputType.values.map((InputType inputType) {
+                        return DropdownMenuItem(
+                          value: inputType,
+                          child: Text(
+                            inputType.name,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                    Visibility(
+                      visible: _inputPromptFieldVisible,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          border: const UnderlineInputBorder(),
+                          labelText: 'Optional: Tell your user what to input',
+                          hintText: getInputHintText(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               AppletInputCard(
                 visible: _outputFieldVisible,
-                title: "Output",
-                child: DropdownButtonFormField(
-                  value: _selectedOutputType,
-                  hint: const Text(
-                    'Choose an output type',
-                  ),
-                  isExpanded: true,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _selectedOutputType = value;
-                      _submitButtonVisible = true;
-                    });
-                  },
-                  onSaved: (value) {
-                    setState(() {
-                      _selectedOutputType = value;
-                    });
-                  },
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please choose an option";
-                    } else {
-                      return null;
-                    }
-                  },
-                  items: _outputTypes.map((String val) {
-                    return DropdownMenuItem(
-                      value: val,
-                      child: Text(
-                        val,
+                title: "Output type",
+                child: Column(
+                  children: [
+                    DropdownButtonFormField(
+                      value: _selectedOutputType,
+                      hint: const Text(
+                        'Choose an output type',
                       ),
-                    );
-                  }).toList(),
+                      isExpanded: true,
+                      onChanged: (OutputType? outputType) {
+                        setState(() {
+                          _selectedOutputType = outputType;
+                          _submitButtonVisible = true;
+                          _outputPromptFieldVisible = true;
+                        });
+                      },
+                      onSaved: (value) {
+                        setState(() {
+                          _selectedOutputType = value;
+                        });
+                      },
+                      validator: (OutputType? outputType) {
+                        if (outputType == null) {
+                          return "Please choose an option";
+                        } else {
+                          return null;
+                        }
+                      },
+                      items: OutputType.values.map((OutputType outputType) {
+                        return DropdownMenuItem(
+                          value: outputType,
+                          child: Text(
+                            outputType.name,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                    Visibility(
+                      visible: _outputPromptFieldVisible,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            border: const UnderlineInputBorder(),
+                            labelText: 'Optional: Explain your app\'s result',
+                            hintText: getOutputHintText()),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Row(
@@ -186,7 +265,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                         onPressed: () {
                           // Validate returns true if the form is valid, or false otherwise.
                           if (_formKey.currentState!.validate()) {
-                            // Create app with all that information here
+                            // TODO: Push to RunScreen with the created applet
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Testing your app'),
