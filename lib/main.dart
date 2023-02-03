@@ -3,6 +3,8 @@ import 'package:ai_flow/home_screen/home_screen.dart';
 import 'package:ai_flow/models/applet.dart';
 import 'package:ai_flow/run_screen/run_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 const String homeRoute = "/home";
 const String createRoute = "/create";
@@ -10,6 +12,9 @@ const String runRoute = "/run";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const App());
 }
 

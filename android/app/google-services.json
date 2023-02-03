@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "716093299703",
+    "project_id": "ai-flow-374403",
+    "storage_bucket": "ai-flow-374403.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716093299703:android:024ccb577976e55a49ecf2",
+        "android_client_info": {
+          "package_name": "com.example.ai_flow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716093299703-5v55rv026ihbh6osrvnvh7oo38rsvsot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDidgV_bSXpUDtNAtw-6C0T-DtLrYi41Eo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716093299703-5v55rv026ihbh6osrvnvh7oo38rsvsot.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "716093299703-u4jt50j1tr7pt2l4udv6971ubpemla0o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.aiFlow"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
