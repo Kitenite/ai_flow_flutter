@@ -1,4 +1,4 @@
-import 'package:ai_flow/home_screen/applet_preview.dart';
+import 'package:ai_flow/components/home_screen/applet_preview.dart';
 import 'package:ai_flow/models/applet.dart';
 import 'package:flutter/material.dart';
 

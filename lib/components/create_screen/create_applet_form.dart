@@ -1,7 +1,7 @@
-import 'package:ai_flow/components/applet_input_card.dart';
-import 'package:ai_flow/main.dart';
+import 'package:ai_flow/components/common/applet_input_card.dart';
+import 'package:ai_flow/components/run_screen/run_screen.dart';
 import 'package:ai_flow/models/applet.dart';
-import 'package:ai_flow/run_screen/run_screen.dart';
+import 'package:ai_flow/resources/constants.dart';
 import 'package:flutter/material.dart';
 
 class CreateAppletForm extends StatefulWidget {

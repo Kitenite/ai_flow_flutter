@@ -8,11 +8,10 @@ part of 'user.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) => User()
   ..id = json['id'] as String
-  ..userApplets = (json['userApplets'] as List<dynamic>)
-      .map((e) => Applet.fromJson(e as Map<String, dynamic>))
-      .toList();
+  ..collectionIds =
+      (json['collectionIds'] as List<dynamic>).map((e) => e as String).toList();
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
-      'userApplets': instance.userApplets,
+      'collectionIds': instance.collectionIds,
     };

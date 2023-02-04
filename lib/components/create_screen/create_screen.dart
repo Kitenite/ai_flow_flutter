@@ -1,4 +1,4 @@
-import 'package:ai_flow/create_screen/create_applet_form.dart';
+import 'package:ai_flow/components/create_screen/create_applet_form.dart';
 import 'package:flutter/material.dart';
 
 class CreateScreen extends StatefulWidget {

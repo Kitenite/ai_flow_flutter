@@ -1,6 +1,18 @@
+import 'package:ai_flow/utils/uuid.dart';
 import 'package:json_annotation/json_annotation.dart';
-
 part 'applet.g.dart';
+
+@JsonSerializable()
+class AppletCollection {
+  String id = createUUID();
+  List<Applet> applets = List.empty();
+
+  AppletCollection();
+
+  factory AppletCollection.fromJson(Map<String, dynamic> json) =>
+      _$AppletCollectionFromJson(json);
+  Map<String, dynamic> toJson() => _$AppletCollectionToJson(this);
+}
 
 @JsonSerializable()
 class Applet {

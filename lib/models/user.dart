@@ -7,9 +7,9 @@ part 'user.g.dart';
 @JsonSerializable()
 class User {
   String id = const Uuid().v4();
-  List<Applet> userApplets = List.empty();
-  User();
+  List<String> collectionIds = List.empty();
 
+  User();
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }

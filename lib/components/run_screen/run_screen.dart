@@ -1,6 +1,6 @@
+import 'package:ai_flow/components/run_screen/text_input_screen.dart';
+import 'package:ai_flow/components/run_screen/text_output_screen.dart';
 import 'package:ai_flow/models/applet.dart';
-import 'package:ai_flow/run_screen/text_input_screen.dart';
-import 'package:ai_flow/run_screen/text_output_screen.dart';
 import 'package:flutter/material.dart';
 
 class RunScreen extends StatefulWidget {
@@ -21,7 +21,6 @@ class RunScreen extends StatefulWidget {
 class RunScreenState extends State<RunScreen> {
   void textInputCallback(String inputText) {
     // TODO: Call server and wait for result using FutureBuilder
-
     // TODO: Display result
     Navigator.push(
       context,

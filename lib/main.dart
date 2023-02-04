@@ -1,22 +1,26 @@
-import 'package:ai_flow/create_screen/create_screen.dart';
-import 'package:ai_flow/home_screen/home_screen.dart';
+import 'package:ai_flow/components/create_screen/create_screen.dart';
+import 'package:ai_flow/components/home_screen/home_screen.dart';
+import 'package:ai_flow/components/run_screen/run_screen.dart';
 import 'package:ai_flow/models/applet.dart';
-import 'package:ai_flow/models/user.dart';
-import 'package:ai_flow/run_screen/run_screen.dart';
+import 'package:ai_flow/resources/constants.dart';
+import 'package:ai_flow/sao/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
-// Routes
-const String homeRoute = "/home";
-const String createRoute = "/create";
-const String runRoute = "/run";
-// Data
-const String userIdPreference = "user_id";
-const String firebaseUserCollection = "users";
+List<Applet> marketplaceApplets = [
+  Applet(
+      name: "Vegan ingredients",
+      prompt:
+          "Look at this list of recipes. For each ingredient, explain the ingredients in 1-2 sentences and say if they are vegan. Then at the end, say whether all the ingredients are vegan or not vegan: ",
+      description:
+          "Takes a list of ingredients and say whether or not it's vegan",
+      inputType: InputType.text,
+      outputType: OutputType.text,
+      inputPrompt: "Add your list of ingredients here"),
+];
 
 void setupFirebase() async {
   await Firebase.initializeApp(
@@ -34,23 +38,10 @@ void setupFirebase() async {
 
 void setupUser() async {
   // TODO: Use user ID from firebase auth instead of shared preference (local storage)
-  final prefs = await SharedPreferences.getInstance();
+  String? userId = await getUserId();
 
-  // TODO: Remove
-  // await prefs.remove(userIdPreference);
-  String? userId = prefs.getString(userIdPreference);
-
-  // If no user, create a user
   if (userId == null) {
-    User newUser = User();
-    await prefs.setString(userIdPreference, newUser.id);
-    // Save user in firestore
-    FirebaseFirestore.instance
-        .collection(firebaseUserCollection)
-        .add(newUser.toJson())
-        .then(
-          (DocumentReference doc) => print('New user added with ID: ${doc.id}'),
-        );
+    createNewUser();
   } else {
     print("User found $userId");
   }
@@ -72,7 +63,7 @@ class App extends StatelessWidget {
       title: 'Ai Flow',
       initialRoute: homeRoute,
       routes: {
-        homeRoute: (context) => const HomePage(),
+        homeRoute: (context) => const HomeScreen(),
         createRoute: (context) => const CreateScreen(),
         runRoute: (context) => RunScreen(
               applet: Applet(

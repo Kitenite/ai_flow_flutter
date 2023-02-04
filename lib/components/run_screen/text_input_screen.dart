@@ -1,4 +1,4 @@
-import 'package:ai_flow/components/applet_input_card.dart';
+import 'package:ai_flow/components/common/applet_input_card.dart';
 import 'package:ai_flow/models/applet.dart';
 import 'package:flutter/material.dart';
 
