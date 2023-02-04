@@ -1,3 +1,4 @@
+import 'package:ai_flow/utils/uuid.dart';
 import 'package:uuid/uuid.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -5,7 +6,7 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
-  String id = const Uuid().v4();
+  String id = UUIDUtil.createUUID();
   List<String> collectionIds = [];
 
   User();

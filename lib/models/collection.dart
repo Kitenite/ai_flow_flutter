@@ -4,7 +4,7 @@ part 'collection.g.dart';
 
 @JsonSerializable()
 class Collection {
-  String id = createUUID();
+  String id = UUIDUtil.createUUID();
   List<String> appletIds = List.empty();
   String name;
 

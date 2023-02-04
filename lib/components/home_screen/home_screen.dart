@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Column(
-        children: <Widget>[
+        children: const [
           Expanded(
             child: SelectAppletGridView(
               title: "Your Apps",
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               applets: [],
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Expanded(
             child: SelectAppletGridView(
               title: "Marketplace",
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
               applets: [],
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: kBottomNavigationBarHeight + kRadialReactionRadius + 10,
           ),
         ],
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, createRoute);
+          Navigator.pushNamed(context, Constants.createRoute);
         },
         backgroundColor: const Color.fromARGB(255, 128, 81, 209),
         foregroundColor: Colors.white,

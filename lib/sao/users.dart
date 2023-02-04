@@ -4,19 +4,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDataAccessor {
+  static final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   static Future<String?> getUserId() async {
     final prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString(userIdPreference);
+    String? userId = prefs.getString(Constants.userIdPreference);
     return userId;
   }
 
   static Future<User> createNewUser() async {
     final prefs = await SharedPreferences.getInstance();
     User newUser = User();
-    await prefs.setString(userIdPreference, newUser.id);
-    // Save user in firestore
+    await prefs.setString(Constants.userIdPreference, newUser.id);
     FirebaseFirestore.instance
-        .collection(usersCollectionId)
+        .collection(Constants.usersCollectionId)
         .add(newUser.toJson())
         .then(
           (DocumentReference doc) =>
@@ -25,17 +26,8 @@ class UserDataAccessor {
     return newUser;
   }
 
-  // We might want a stream instead
-  // Future<User> fetchUser(String userId) async {
-  //   FirebaseFirestore db = FirebaseFirestore.instance;
-
-  //   final docRef = db.collection(firebaseUserCollection).doc(userId);
-  //   docRef.get().then(
-  //     (DocumentSnapshot doc) {
-  //       final data = doc.data() as Map<String, dynamic>;
-  //       return data;
-  //     },
-  //     onError: (e) => print("Error getting document: $e"),
-  //   );
-  // }
+  static Stream<User> streamUser(String id) {
+    return _db.collection(Constants.usersCollectionId).doc(id).snapshots().map(
+        (snapshot) => User.fromJson(snapshot.data as Map<String, dynamic>));
+  }
 }

@@ -3,16 +3,24 @@ import 'package:ai_flow/resources/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CollectionDataAccessor {
-  static Future<Collection> createNewCollection(String name) async {
-    Collection newCollection = Collection(name: name);
+  static final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  static Future<Collection> createNewCollection(
+      Collection newCollection) async {
     // Save collection in firestore
     FirebaseFirestore.instance
-        .collection(collectionsCollectionId)
+        .collection(Constants.collectionsCollectionId)
         .add(newCollection.toJson())
         .then(
           (DocumentReference doc) =>
               print('New collection added to DB with ID: ${doc.id}'),
         );
     return newCollection;
+  }
+
+  static Stream<Collection> streamCollection(String id) {
+    return _db.collection(Constants.usersCollectionId).doc(id).snapshots().map(
+        (snapshot) =>
+            Collection.fromJson(snapshot.data as Map<String, dynamic>));
   }
 }

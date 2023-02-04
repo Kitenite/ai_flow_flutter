@@ -1,12 +1,14 @@
+class Constants {
 // Routes
-const String homeRoute = "/home";
-const String createRoute = "/create";
-const String runRoute = "/run";
+  static const String homeRoute = "/home";
+  static const String createRoute = "/create";
+  static const String runRoute = "/run";
 
 // Firebase collection IDs
-const String usersCollectionId = "users";
-const String collectionsCollectionId = "collections";
-const String appletsCollectionId = "applets";
+  static const String usersCollectionId = "users";
+  static const String collectionsCollectionId = "collections";
+  static const String appletsCollectionId = "applets";
 
 // Shared preferences (local storage)
-const String userIdPreference = "user_id";
+  static const String userIdPreference = "user_id";
+}

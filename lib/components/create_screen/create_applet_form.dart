@@ -294,7 +294,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                               MaterialPageRoute(
                                 builder: (_) => RunScreen(
                                   applet: createApplet(),
-                                  originRoute: createRoute,
+                                  originRoute: Constants.createRoute,
                                 ),
                               ),
                             );

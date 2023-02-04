@@ -44,11 +44,11 @@ void setupUser() async {
   String? userId = await UserDataAccessor.getUserId();
 
   if (userId == null) {
-    // Create new user with default collection
+    // Create new user with a default collection
     User newUser = await UserDataAccessor.createNewUser();
-    Collection defaultCollection =
-        await CollectionDataAccessor.createNewCollection("My Apps");
-    newUser.addCollectionId(defaultCollection.id);
+    Collection newCollection = Collection(name: "My Apps");
+    CollectionDataAccessor.createNewCollection(newCollection);
+    newUser.addCollectionId(newCollection.id);
   } else {
     print("User found $userId");
   }
@@ -68,11 +68,11 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Ai Flow',
-      initialRoute: homeRoute,
+      initialRoute: Constants.homeRoute,
       routes: {
-        homeRoute: (context) => const HomeScreen(),
-        createRoute: (context) => const CreateScreen(),
-        runRoute: (context) => RunScreen(
+        Constants.homeRoute: (context) => const HomeScreen(),
+        Constants.createRoute: (context) => const CreateScreen(),
+        Constants.runRoute: (context) => RunScreen(
               applet: Applet(
                 name: "Vegan ingredients",
                 prompt:
