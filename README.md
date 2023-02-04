@@ -14,3 +14,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Run code generation
+We're using [json_serializable](https://pub.dev/packages/json_serializable/example) which generates boilerplate code to encode and decode models to json. To generate this code, run:
+```
+flutter pub run build_runner build
+```

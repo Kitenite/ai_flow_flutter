@@ -2,7 +2,10 @@ import 'package:ai_flow/components/create_screen/create_screen.dart';
 import 'package:ai_flow/components/home_screen/home_screen.dart';
 import 'package:ai_flow/components/run_screen/run_screen.dart';
 import 'package:ai_flow/models/applet.dart';
+import 'package:ai_flow/models/collection.dart';
+import 'package:ai_flow/models/user.dart';
 import 'package:ai_flow/resources/constants.dart';
+import 'package:ai_flow/sao/collections.dart';
 import 'package:ai_flow/sao/users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -26,7 +29,7 @@ void setupFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  var db = FirebaseFirestore.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
   // Allow offline access to database
   if (kIsWeb) {
     await db
@@ -38,10 +41,14 @@ void setupFirebase() async {
 
 void setupUser() async {
   // TODO: Use user ID from firebase auth instead of shared preference (local storage)
-  String? userId = await getUserId();
+  String? userId = await UserDataAccessor.getUserId();
 
   if (userId == null) {
-    createNewUser();
+    // Create new user with default collection
+    User newUser = await UserDataAccessor.createNewUser();
+    Collection defaultCollection =
+        await CollectionDataAccessor.createNewCollection("My Apps");
+    newUser.addCollectionId(defaultCollection.id);
   } else {
     print("User found $userId");
   }
