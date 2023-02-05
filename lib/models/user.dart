@@ -1,5 +1,4 @@
 import 'package:ai_flow/utils/uuid.dart';
-import 'package:uuid/uuid.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class WaitScreen extends StatelessWidget {
-  const WaitScreen({
-    super.key,
-  });
+  const WaitScreen({super.key, this.message = "Fetching app state..."});
+
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +13,16 @@ class WaitScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
+            children: [
               Text(
-                "Fetching app state",
-                style: TextStyle(fontSize: 20),
+                message,
+                style: const TextStyle(fontSize: 20),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
                 height: 20,
               ),
-              CircularProgressIndicator(),
+              const CircularProgressIndicator(),
             ],
           ),
         ),

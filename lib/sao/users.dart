@@ -54,7 +54,10 @@ class UserDataAccessor {
   }
 
   static Stream<User> streamUser(String id) {
-    return _db.collection(Constants.usersCollectionId).doc(id).snapshots().map(
-        (snapshot) => User.fromJson(snapshot.data as Map<String, dynamic>));
+    return _db
+        .collection(Constants.usersCollectionId)
+        .doc(id)
+        .snapshots()
+        .map((snapshot) => User.fromJson(snapshot.data()!));
   }
 }

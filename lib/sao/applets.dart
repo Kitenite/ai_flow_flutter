@@ -15,7 +15,10 @@ class AppletDataAccessor {
   }
 
   static Stream<Applet> streamApplet(String id) {
-    return _db.collection(Constants.usersCollectionId).doc(id).snapshots().map(
-        (snapshot) => Applet.fromJson(snapshot.data as Map<String, dynamic>));
+    return _db
+        .collection(Constants.usersCollectionId)
+        .doc(id)
+        .snapshots()
+        .map((snapshot) => Applet.fromJson(snapshot.data()!));
   }
 }

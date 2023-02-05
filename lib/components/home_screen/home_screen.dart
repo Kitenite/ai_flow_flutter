@@ -1,17 +1,16 @@
 import 'package:ai_flow/components/home_screen/select_applet_grid.dart';
+import 'package:ai_flow/models/user.dart';
 import 'package:ai_flow/resources/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
   Widget build(BuildContext context) {
+    User user = context.watch<User>();
+    print("user ${user.id}");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
