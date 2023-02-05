@@ -8,43 +8,48 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserDataAccessor {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  static void setupUser() async {
+  static Future<String> getUserId() async {
+    // TODO: For testing, refresh user. Remove this later
+    // final prefs = await SharedPreferences.getInstance();
+    // prefs.remove(Constants.userIdPreference);
+
     // TODO: Use user ID from firebase auth instead of shared preference (local storage)
-    String? userId = await UserDataAccessor.getUserId();
+    String? userId = await getLocalUserId();
 
     if (userId == null) {
-      // Create new user with a default collection
-      User newUser = await UserDataAccessor.createNewUser();
-      Collection newCollection = Collection(name: "My Apps");
-      CollectionDataAccessor.createNewCollection(newCollection);
-      newUser.addCollectionId(newCollection.id);
-    } else {
-      print("User found $userId");
+      User newUser = await createNewUser();
+      saveLocalUserId(newUser.id);
+      userId = newUser.id;
     }
+
+    return userId;
   }
 
-  static Future<String> getUserId() async {
+  static Future<String?> getLocalUserId() async {
     final prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString(Constants.userIdPreference);
-    if (userId == null) {
-      User newUser = User();
-      await prefs.setString(Constants.userIdPreference, newUser.id);
-      return newUser.id;
-    }
     return userId;
+  }
+
+  static void saveLocalUserId(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(Constants.userIdPreference, id);
   }
 
   static Future<User> createNewUser() async {
     final prefs = await SharedPreferences.getInstance();
     User newUser = User();
-    await prefs.setString(Constants.userIdPreference, newUser.id);
     FirebaseFirestore.instance
         .collection(Constants.usersCollectionId)
-        .add(newUser.toJson())
-        .then(
-          (DocumentReference doc) =>
-              print('New user added to DB with ID: ${doc.id}'),
-        );
+        .doc(newUser.id)
+        .set(newUser.toJson())
+        .then((value) => print('Added user with ID: ${newUser.id}'));
+
+    // Add default collections to user
+    Collection newCollection = Collection(name: "My Apps");
+    CollectionDataAccessor.createNewCollection(newCollection);
+    newUser.addCollectionId(newCollection.id);
+    newUser.addCollectionId(Constants.marketplaceCollectionId);
     return newUser;
   }
 

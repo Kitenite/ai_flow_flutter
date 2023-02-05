@@ -16,6 +16,7 @@ class AppletCollection {
 
 @JsonSerializable()
 class Applet {
+  String id = UUIDUtil.createUUID();
   final String prompt;
   final String name;
   final InputType inputType;

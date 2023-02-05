@@ -62,8 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.pushNamed(context, Constants.createRoute);
         },
-        backgroundColor: const Color.fromARGB(255, 128, 81, 209),
-        foregroundColor: Colors.white,
         child: const Icon(Icons.add),
       ),
     );

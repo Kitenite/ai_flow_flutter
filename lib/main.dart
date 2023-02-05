@@ -11,7 +11,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 import 'firebase_options.dart';
 
 List<Applet> marketplaceApplets = [
@@ -43,7 +42,6 @@ void setupFirebase() async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupFirebase();
-  UserDataAccessor.setupUser();
   runApp(const App());
 }
 
@@ -92,6 +90,7 @@ class MainApp extends StatelessWidget {
             ),
       },
       debugShowCheckedModeBanner: false,
+      // TODO: Add custom theme
       theme: ThemeData(
         brightness: Brightness.light,
       ),

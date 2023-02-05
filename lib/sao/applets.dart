@@ -8,11 +8,9 @@ class AppletDataAccessor {
   static Future<Applet> createNewApplet(Applet newApplet) async {
     FirebaseFirestore.instance
         .collection(Constants.appletsCollectionId)
-        .add(newApplet.toJson())
-        .then(
-          (DocumentReference doc) =>
-              print('New applet added to DB with ID: ${doc.id}'),
-        );
+        .doc(newApplet.id)
+        .set(newApplet.toJson())
+        .then((_) => print('New applet added to DB with ID: ${newApplet.id}'));
     return newApplet;
   }
 

@@ -10,11 +10,11 @@ class CollectionDataAccessor {
     // Save collection in firestore
     FirebaseFirestore.instance
         .collection(Constants.collectionsCollectionId)
-        .add(newCollection.toJson())
-        .then(
-          (DocumentReference doc) =>
-              print('New collection added to DB with ID: ${doc.id}'),
-        );
+        .doc(newCollection.id)
+        .set(newCollection.toJson())
+        .then((_) =>
+            print('New collection added to DB with ID: ${newCollection.id}'));
+
     return newCollection;
   }
 
