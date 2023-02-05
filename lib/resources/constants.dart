@@ -3,6 +3,7 @@ class Constants {
   static const String homeRoute = "/home";
   static const String createRoute = "/create";
   static const String runRoute = "/run";
+  static const String waitRoute = "/wait";
 
 // Firebase collection IDs
   static const String usersCollectionId = "users";

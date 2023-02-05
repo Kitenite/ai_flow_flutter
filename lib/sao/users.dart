@@ -1,14 +1,36 @@
+import 'package:ai_flow/models/collection.dart';
 import 'package:ai_flow/models/user.dart';
 import 'package:ai_flow/resources/constants.dart';
+import 'package:ai_flow/sao/collections.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDataAccessor {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  static Future<String?> getUserId() async {
+  static void setupUser() async {
+    // TODO: Use user ID from firebase auth instead of shared preference (local storage)
+    String? userId = await UserDataAccessor.getUserId();
+
+    if (userId == null) {
+      // Create new user with a default collection
+      User newUser = await UserDataAccessor.createNewUser();
+      Collection newCollection = Collection(name: "My Apps");
+      CollectionDataAccessor.createNewCollection(newCollection);
+      newUser.addCollectionId(newCollection.id);
+    } else {
+      print("User found $userId");
+    }
+  }
+
+  static Future<String> getUserId() async {
     final prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString(Constants.userIdPreference);
+    if (userId == null) {
+      User newUser = User();
+      await prefs.setString(Constants.userIdPreference, newUser.id);
+      return newUser.id;
+    }
     return userId;
   }
 
