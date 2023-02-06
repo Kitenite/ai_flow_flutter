@@ -14,15 +14,22 @@ class CollectionDataAccessor {
         .set(newCollection.toJson())
         .then((_) =>
             print('New collection added to DB with ID: ${newCollection.id}'));
-
     return newCollection;
   }
 
   static Stream<Collection> streamCollection(String id) {
     return _db
-        .collection(Constants.usersCollectionId)
+        .collection(Constants.collectionsCollectionId)
         .doc(id)
         .snapshots()
-        .map((snapshot) => Collection.fromJson(snapshot.data()!));
+        .map(
+      (snapshot) {
+        if (snapshot.exists) {
+          return Collection.fromJson(snapshot.data()!);
+        } else {
+          return Collection(name: "Loading...");
+        }
+      },
+    );
   }
 }

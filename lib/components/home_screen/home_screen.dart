@@ -1,6 +1,8 @@
 import 'package:ai_flow/components/home_screen/select_applet_grid.dart';
+import 'package:ai_flow/models/collection.dart';
 import 'package:ai_flow/models/user.dart';
 import 'package:ai_flow/resources/constants.dart';
+import 'package:ai_flow/sao/collections.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User user = context.watch<User>();
-    print("user ${user.id}");
+    print("user ${user.id} ${user.collectionIds}");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -34,27 +36,18 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: const [
-          Expanded(
-            child: SelectAppletGridView(
-              title: "Your Apps",
-              // TODO: Get user applets
-              applets: [],
-            ),
-          ),
-          SizedBox(height: 20),
-          Expanded(
-            child: SelectAppletGridView(
-              title: "Marketplace",
-              // TODO: Get marketplace collection
-              applets: [],
-            ),
-          ),
-          SizedBox(
-            height: kBottomNavigationBarHeight + kRadialReactionRadius + 10,
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            for (String collectionId in user.collectionIds)
+              Column(
+                children: [
+                  CollectionView(collectionId: collectionId),
+                  SizedBox(height: 20),
+                ],
+              ),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -62,6 +55,28 @@ class HomeScreen extends StatelessWidget {
           Navigator.pushNamed(context, Constants.createRoute);
         },
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class CollectionView extends StatelessWidget {
+  const CollectionView({
+    super.key,
+    required this.collectionId,
+  });
+
+  final String collectionId;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<Collection>(
+      create: (BuildContext context) =>
+          CollectionDataAccessor.streamCollection(collectionId),
+      initialData: Collection(name: "Loading..."),
+      child: const SizedBox(
+        height: 300,
+        child: SelectAppletGridView(),
       ),
     );
   }

@@ -16,9 +16,17 @@ class AppletDataAccessor {
 
   static Stream<Applet> streamApplet(String id) {
     return _db
-        .collection(Constants.usersCollectionId)
+        .collection(Constants.appletsCollectionId)
         .doc(id)
         .snapshots()
         .map((snapshot) => Applet.fromJson(snapshot.data()!));
+  }
+
+  static Future<Applet> getApplet(String id) {
+    return _db
+        .collection(Constants.appletsCollectionId)
+        .doc(id)
+        .get()
+        .then((value) => Applet.fromJson(value.data()!));
   }
 }
