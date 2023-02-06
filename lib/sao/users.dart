@@ -37,19 +37,21 @@ class UserDataAccessor {
   }
 
   static Future<User> createNewUser() async {
-    final prefs = await SharedPreferences.getInstance();
     User newUser = User();
-    FirebaseFirestore.instance
-        .collection(Constants.usersCollectionId)
-        .doc(newUser.id)
-        .set(newUser.toJson())
-        .then((value) => print('Added user with ID: ${newUser.id}'));
 
     // Add default collections to user
     Collection newCollection = Collection(name: "My Apps");
     CollectionDataAccessor.createNewCollection(newCollection);
     newUser.addCollectionId(newCollection.id);
     newUser.addCollectionId(Constants.marketplaceCollectionId);
+
+    // Save in db
+    FirebaseFirestore.instance
+        .collection(Constants.usersCollectionId)
+        .doc(newUser.id)
+        .set(newUser.toJson())
+        .then((value) => print('Added user with ID: ${newUser.id}'));
+
     return newUser;
   }
 
@@ -60,4 +62,14 @@ class UserDataAccessor {
         .snapshots()
         .map((snapshot) => User.fromJson(snapshot.data()!));
   }
+
+  static void updateUser(User user) {
+    FirebaseFirestore.instance
+        .collection(Constants.usersCollectionId)
+        .doc(user.id)
+        .set(user.toJson())
+        .then((value) => print('Updated user with ID: ${user.id}'));
+  }
+
+  static addCollectionToUser() {}
 }

@@ -7,7 +7,6 @@ class CollectionDataAccessor {
 
   static Future<Collection> createNewCollection(
       Collection newCollection) async {
-    // Save collection in firestore
     FirebaseFirestore.instance
         .collection(Constants.collectionsCollectionId)
         .doc(newCollection.id)
@@ -31,5 +30,14 @@ class CollectionDataAccessor {
         }
       },
     );
+  }
+
+  static void updateCollection(Collection collection) {
+    FirebaseFirestore.instance
+        .collection(Constants.collectionsCollectionId)
+        .doc(collection.id)
+        .set(collection.toJson())
+        .then((_) =>
+            print('New collection added to DB with ID: ${collection.id}'));
   }
 }

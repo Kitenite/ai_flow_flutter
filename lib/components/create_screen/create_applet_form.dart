@@ -1,8 +1,11 @@
 import 'package:ai_flow/components/common/applet_input_card.dart';
 import 'package:ai_flow/components/run_screen/run_screen.dart';
 import 'package:ai_flow/models/applet.dart';
+import 'package:ai_flow/models/user.dart';
 import 'package:ai_flow/resources/constants.dart';
+import 'package:ai_flow/sao/applets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateAppletForm extends StatefulWidget {
   const CreateAppletForm({super.key});
@@ -77,6 +80,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
 
   @override
   Widget build(BuildContext context) {
+    User user = context.watch<User>();
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
@@ -313,12 +317,9 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                         onPressed: () {
                           // Validate returns true if the form is valid, or false otherwise.
                           if (_formKey.currentState!.validate()) {
-                            // Create app with all that information here
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Creating your app'),
-                              ),
-                            );
+                            // TODO: Add app to user's main collection
+                            Applet newApplet = createApplet();
+                            AppletDataAccessor.createNewApplet(newApplet);
                           }
                         },
                         child: const Text('Submit'),

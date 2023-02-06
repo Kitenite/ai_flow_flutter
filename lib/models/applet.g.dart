@@ -28,9 +28,10 @@ Applet _$AppletFromJson(Map<String, dynamic> json) => Applet(
       inputPrompt: json['inputPrompt'] as String? ?? "",
       outputPrompt: json['outputPrompt'] as String? ?? "",
       showPrompt: json['showPrompt'] as bool? ?? true,
-    );
+    )..id = json['id'] as String;
 
 Map<String, dynamic> _$AppletToJson(Applet instance) => <String, dynamic>{
+      'id': instance.id,
       'prompt': instance.prompt,
       'name': instance.name,
       'inputType': _$InputTypeEnumMap[instance.inputType]!,

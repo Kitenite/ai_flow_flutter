@@ -1,22 +1,10 @@
 import 'package:ai_flow/resources/constants.dart';
+import 'package:ai_flow/utils/db_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_flow/components/create_screen/create_screen.dart';
 import 'package:ai_flow/components/home_screen/home_screen.dart';
 import 'package:ai_flow/components/run_screen/run_screen.dart';
 import 'package:ai_flow/components/wait_screen/wait_screen.dart';
-import 'package:ai_flow/models/applet.dart';
-
-List<Applet> marketplaceApplets = [
-  Applet(
-      name: "Vegan ingredients",
-      prompt:
-          "Look at this list of recipes. For each ingredient, explain the ingredients in 1-2 sentences and say if they are vegan. Then at the end, say whether all the ingredients are vegan or not vegan: ",
-      description:
-          "Takes a list of ingredients and say whether or not it's vegan",
-      inputType: InputType.text,
-      outputType: OutputType.text,
-      inputPrompt: "Add your list of ingredients here"),
-];
 
 class MainApp extends StatelessWidget {
   const MainApp({
@@ -34,7 +22,7 @@ class MainApp extends StatelessWidget {
         Constants.homeRoute: (context) => const HomeScreen(),
         Constants.createRoute: (context) => const CreateScreen(),
         Constants.runRoute: (context) => RunScreen(
-              applet: marketplaceApplets.first,
+              applet: DatabaseMockHelpers.marketplaceApplets.first,
             ),
       },
       debugShowCheckedModeBanner: false,
