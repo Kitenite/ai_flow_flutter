@@ -112,8 +112,8 @@ class _TextInputScreenState extends State<TextInputScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
-                  onPressed: () =>
-                      widget.submitCallback(_textInputController.text),
+                  onPressed: () => widget.submitCallback(
+                      "${widget.applet.prompt}: ${_textInputController.text}"),
                   child: const Text('Submit'),
                 ),
               ),
