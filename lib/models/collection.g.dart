@@ -8,6 +8,9 @@ part of 'collection.dart';
 
 Collection _$CollectionFromJson(Map<String, dynamic> json) => Collection(
       name: json['name'] as String,
+      collectionType: $enumDecodeNullable(
+              _$CollectionTypeEnumMap, json['collectionType']) ??
+          CollectionType.none,
     )
       ..id = json['id'] as String
       ..appletIds =
@@ -18,4 +21,11 @@ Map<String, dynamic> _$CollectionToJson(Collection instance) =>
       'id': instance.id,
       'appletIds': instance.appletIds,
       'name': instance.name,
+      'collectionType': _$CollectionTypeEnumMap[instance.collectionType]!,
     };
+
+const _$CollectionTypeEnumMap = {
+  CollectionType.personal: 'personal',
+  CollectionType.marketplace: 'marketplace',
+  CollectionType.none: 'none',
+};

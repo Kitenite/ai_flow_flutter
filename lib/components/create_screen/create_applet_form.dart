@@ -4,6 +4,7 @@ import 'package:ai_flow/models/applet.dart';
 import 'package:ai_flow/models/user.dart';
 import 'package:ai_flow/resources/constants.dart';
 import 'package:ai_flow/sao/applets.dart';
+import 'package:ai_flow/sao/collections.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -317,9 +318,14 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                         onPressed: () {
                           // Validate returns true if the form is valid, or false otherwise.
                           if (_formKey.currentState!.validate()) {
-                            // TODO: Add app to user's main collection
                             Applet newApplet = createApplet();
                             AppletDataAccessor.createNewApplet(newApplet);
+                            CollectionDataAccessor.addAppletToCollection(
+                              // TODO: Instead of first, should check for personal collection type instead.
+                              user.collectionIds.first,
+                              newApplet.id,
+                            );
+                            Navigator.pop(context);
                           }
                         },
                         child: const Text('Submit'),

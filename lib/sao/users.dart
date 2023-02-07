@@ -40,7 +40,8 @@ class UserDataAccessor {
     User newUser = User();
 
     // Add default collections to user
-    Collection newCollection = Collection(name: "My Apps");
+    Collection newCollection =
+        Collection(name: "My Apps", collectionType: CollectionType.personal);
     CollectionDataAccessor.createNewCollection(newCollection);
     newUser.addCollectionId(newCollection.id);
     newUser.addCollectionId(Constants.marketplaceCollectionId);
@@ -61,6 +62,14 @@ class UserDataAccessor {
         .doc(id)
         .snapshots()
         .map((snapshot) => User.fromJson(snapshot.data()!));
+  }
+
+  static Future<User> getUser(String id) {
+    return _db
+        .collection(Constants.usersCollectionId)
+        .doc(id)
+        .get()
+        .then((value) => User.fromJson(value.data()!));
   }
 
   static void updateUser(User user) {

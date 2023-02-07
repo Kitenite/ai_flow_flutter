@@ -32,6 +32,14 @@ class CollectionDataAccessor {
     );
   }
 
+  static Future<Collection> getCollection(String id) {
+    return _db
+        .collection(Constants.collectionsCollectionId)
+        .doc(id)
+        .get()
+        .then((value) => Collection.fromJson(value.data()!));
+  }
+
   static void updateCollection(Collection collection) {
     FirebaseFirestore.instance
         .collection(Constants.collectionsCollectionId)
@@ -39,5 +47,15 @@ class CollectionDataAccessor {
         .set(collection.toJson())
         .then((_) =>
             print('New collection added to DB with ID: ${collection.id}'));
+  }
+
+  static void addAppletToCollection(
+      String collectionId, String appletId) async {
+    Collection oldCollection = await getCollection(collectionId);
+    List<String> newIdList = [...oldCollection.appletIds, appletId];
+    FirebaseFirestore.instance
+        .collection(Constants.collectionsCollectionId)
+        .doc(collectionId)
+        .update({"appletIds": newIdList});
   }
 }
