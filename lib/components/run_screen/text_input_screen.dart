@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:ai_flow/components/common/applet_input_card.dart';
 import 'package:ai_flow/components/run_screen/speech_to_text.dart';
 import 'package:ai_flow/models/applet.dart';
+import 'package:ai_flow/utils/image_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class TextInputScreen extends StatefulWidget {
   const TextInputScreen({
@@ -23,6 +28,20 @@ class _TextInputScreenState extends State<TextInputScreen> {
   final List<bool> _expandedListItems = [false];
   var _submitButtonVisible = false;
   final _textInputController = TextEditingController();
+
+  void sendPicture(ImageSource source) async {
+    XFile? image = (await ImageHandler.pickImage(source));
+
+    if (image == null) {
+      print("Null image");
+      return;
+    }
+
+    print("HERE");
+
+    File? croppedImage =
+        (await ImageHandler.cropImage(File(image.path))) as File?;
+  }
 
   Widget getPromptView() {
     // If applet allows prompts to be displayed
@@ -55,23 +74,15 @@ class _TextInputScreenState extends State<TextInputScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          widget.applet.name,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(15),
-          child: Text(
-            widget.applet.description,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            widget.applet.name,
             style: const TextStyle(
               color: Colors.black,
-              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
             ),
           ),
         ),
@@ -106,40 +117,81 @@ class _TextInputScreenState extends State<TextInputScreen> {
                   });
                 })),
             ],
-          ),
-        ),
-        getPromptView(),
-        Row(
-          children: [
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancel'),
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: Text(
+              widget.applet.description,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
               ),
             ),
-            const Spacer(),
-            Visibility(
-              visible: _submitButtonVisible,
-              maintainAnimation: true,
-              maintainState: true,
-              maintainSize: true,
-              child: Padding(
+          ),
+          Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.photo_camera),
+                onPressed: () {
+                  sendPicture(ImageSource.camera);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.photo_library),
+                onPressed: () {
+                  sendPicture(ImageSource.gallery);
+                },
+              ),
+            ],
+          ),
+          AppletInputCard(
+            title: '${widget.applet.inputPrompt}:',
+            child: TextFormField(
+              controller: _textInputController,
+              autofocus: true,
+              autocorrect: true,
+              maxLines: 10,
+              onChanged: (value) {
+                if (value.isNotEmpty) {
+                  setState(() {
+                    _submitButtonVisible = true;
+                  });
+                }
+              },
+            ),
+          ),
+          getPromptView(),
+          Row(
+            children: [
+              const Spacer(),
+              Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
-                  onPressed: () => widget.submitCallback(
-                      "${widget.applet.prompt}: ${_textInputController.text}"),
-                  child: const Text('Submit'),
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel'),
                 ),
               ),
-            ),
-            const Spacer(),
-          ],
-        ),
-      ],
+              const Spacer(),
+              Visibility(
+                visible: _submitButtonVisible,
+                maintainAnimation: true,
+                maintainState: true,
+                maintainSize: true,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: ElevatedButton(
+                    onPressed: () => widget.submitCallback(
+                        "${widget.applet.prompt}: ${_textInputController.text}"),
+                    child: const Text('Submit'),
+                  ),
+                ),
+              ),
+              const Spacer(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
