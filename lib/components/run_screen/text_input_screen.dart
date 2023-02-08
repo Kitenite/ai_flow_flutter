@@ -91,62 +91,6 @@ class _TextInputScreenState extends State<TextInputScreen> {
             ),
           ),
           AppletInputCard(
-          title: '${widget.applet.inputPrompt}:',
-          child: Stack(
-            children: <Widget>[
-              TextFormField(
-                controller: _textInputController,
-                autofocus: true,
-                autocorrect: true,
-                maxLines: 10,
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    setState(() {
-                      _submitButtonVisible = true;
-                    });
-                  } else {
-                    setState(() {
-                      _submitButtonVisible = false;
-                    });
-                  }
-                },
-              ),
-              Positioned(
-                bottom: 10,
-                right: 10,
-                child: SpeechToText(
-                    finishedProcessingCallback: (String outputText) {
-                  setState(() {
-                    _textInputController.text = outputText;
-                  });
-                })),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Text(
-              widget.applet.description,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-              ),
-            ),
-          ),
-          Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.photo_camera),
-                onPressed: () {
-                  sendPicture(ImageSource.camera);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.photo_library),
-                onPressed: () {
-                  sendPicture(ImageSource.gallery);
-                },
-              ),
-            ],
-          ),
-          AppletInputCard(
             title: '${widget.applet.inputPrompt}:',
             child: TextFormField(
               controller: _textInputController,
@@ -161,6 +105,42 @@ class _TextInputScreenState extends State<TextInputScreen> {
                 }
               },
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(10),
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {
+                  sendPicture(ImageSource.camera);
+                },
+                child: Icon(Icons.photo_camera),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(10),
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {
+                  sendPicture(ImageSource.gallery);
+                },
+                child: Icon(Icons.photo_library),
+              ),
+              SpeechToText(
+                finishedProcessingCallback: (String outputText) {
+                  setState(() {
+                    _textInputController.text = outputText;
+                  });
+                },
+              ),
+            ],
           ),
           getPromptView(),
           Row(
