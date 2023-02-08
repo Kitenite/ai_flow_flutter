@@ -71,23 +71,8 @@ class RunScreenState extends State<RunScreen> {
   }
 
   Widget getInputScreen() {
-    switch (widget.applet.inputType) {
-      case InputType.text:
-        return TextInputScreen(
-          applet: widget.applet,
-          submitCallback: textInputCallback,
-        );
-      case InputType.image:
-        return TextInputScreen(
-          applet: widget.applet,
-          submitCallback: textInputCallback,
-        );
-      case InputType.audio:
-        return TextInputScreen(
-          applet: widget.applet,
-          submitCallback: textInputCallback,
-        );
-    }
+    return TextInputScreen(
+        applet: widget.applet, submitCallback: textInputCallback);
   }
 
   @override

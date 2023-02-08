@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ai_flow/components/common/applet_input_card.dart';
+import 'package:ai_flow/components/run_screen/speech_to_text.dart';
 import 'package:ai_flow/models/applet.dart';
 import 'package:ai_flow/utils/image_handler.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +85,38 @@ class _TextInputScreenState extends State<TextInputScreen> {
               fontSize: 22,
             ),
           ),
+        ),
+        AppletInputCard(
+          title: '${widget.applet.inputPrompt}:',
+          child: Stack(
+            children: <Widget>[
+              TextFormField(
+                controller: _textInputController,
+                autofocus: true,
+                autocorrect: true,
+                maxLines: 10,
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    setState(() {
+                      _submitButtonVisible = true;
+                    });
+                  } else {
+                    setState(() {
+                      _submitButtonVisible = false;
+                    });
+                  }
+                },
+              ),
+              Positioned(
+                bottom: 10,
+                right: 10,
+                child: SpeechToText(
+                    finishedProcessingCallback: (String outputText) {
+                  setState(() {
+                    _textInputController.text = outputText;
+                  });
+                })),
+            ],
           Padding(
             padding: const EdgeInsets.all(15),
             child: Text(
