@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:ai_flow/components/common/applet_input_card.dart';
 import 'package:ai_flow/components/run_screen/speech_to_text.dart';
 import 'package:ai_flow/models/applet.dart';
+import 'package:ai_flow/sao/api.dart';
 import 'package:ai_flow/utils/image_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -37,10 +38,14 @@ class _TextInputScreenState extends State<TextInputScreen> {
       return;
     }
 
-    print("HERE");
+    CroppedFile? croppedImage =
+        (await ImageHandler.cropImage(File(image.path)));
 
-    File? croppedImage =
-        (await ImageHandler.cropImage(File(image.path))) as File?;
+    if (croppedImage == null) {
+      return sendPicture(source);
+    }
+    String result = await ApiDataAccessor.imageToText(File(croppedImage.path));
+    _textInputController.text = result;
   }
 
   Widget getPromptView() {
@@ -85,8 +90,7 @@ class _TextInputScreenState extends State<TextInputScreen> {
               fontSize: 22,
             ),
           ),
-        ),
-        AppletInputCard(
+          AppletInputCard(
           title: '${widget.applet.inputPrompt}:',
           child: Stack(
             children: <Widget>[
@@ -116,7 +120,6 @@ class _TextInputScreenState extends State<TextInputScreen> {
                     _textInputController.text = outputText;
                   });
                 })),
-            ],
           Padding(
             padding: const EdgeInsets.all(15),
             child: Text(

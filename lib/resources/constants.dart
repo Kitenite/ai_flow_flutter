@@ -19,5 +19,5 @@ class Constants {
       "p25rp3yl2f.execute-api.us-east-1.amazonaws.com";
   static const String textToTextApiPath = "prod/txt2txt";
   static const String speechToTextApiPath = "prod/audio2txt";
-  static const String imageToTextApiPath = "$baseApi/img2txt";
+  static const String imageToTextApiPath = "prod/img2txt";
 }
