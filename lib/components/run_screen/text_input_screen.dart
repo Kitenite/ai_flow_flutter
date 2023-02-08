@@ -45,7 +45,11 @@ class _TextInputScreenState extends State<TextInputScreen> {
       return sendPicture(source);
     }
     String result = await ApiDataAccessor.imageToText(File(croppedImage.path));
-    _textInputController.text = result;
+
+    setState(() {
+      _textInputController.text = result;
+      _submitButtonVisible = true;
+    });
   }
 
   Widget getPromptView() {
