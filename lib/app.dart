@@ -1,4 +1,3 @@
-import 'package:ai_flow/components/camera_screen/camera_screen.dart';
 import 'package:ai_flow/resources/constants.dart';
 import 'package:ai_flow/utils/db_mocks.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ class MainApp extends StatelessWidget {
       title: 'Ai Flow',
       initialRoute: initialRoute,
       routes: {
-        Constants.cameraRoute: (context) => const CameraScreen(),
         Constants.waitRoute: (context) => const WaitScreen(),
         Constants.homeRoute: (context) => const HomeScreen(),
         Constants.createRoute: (context) => const CreateScreen(),
