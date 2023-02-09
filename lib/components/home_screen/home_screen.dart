@@ -32,6 +32,9 @@ class HomeScreen extends StatelessWidget {
             tooltip: 'Profile button',
             onPressed: () {
               // TODO: Profile button
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text("I'm sure this will do something soon..."),
+              ));
             },
           ),
         ],
@@ -43,7 +46,7 @@ class HomeScreen extends StatelessWidget {
               Column(
                 children: [
                   CollectionView(collectionId: collectionId),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                 ],
               ),
           ],

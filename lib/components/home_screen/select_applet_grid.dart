@@ -47,7 +47,7 @@ class SelectAppletGridView extends StatelessWidget {
                     if (snapshot.hasData) {
                       return AppletPreviewButton(applet: snapshot.data!);
                     }
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   },
                 ),
             ],

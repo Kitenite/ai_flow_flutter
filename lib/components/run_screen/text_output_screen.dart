@@ -71,52 +71,54 @@ class _TextOutputScreenState extends State<TextOutputScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text(
-          "Result",
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const Text(
+            "Result",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
           ),
-        ),
-        getOutputPromptView(),
-        AppletInputCard(
-          child: Text(widget.resultText),
-        ),
-        getInputView(),
-        Row(
-          children: [
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: OutlinedButton(
-                onPressed: () {
-                  if (widget.originRoute.isEmpty) {
-                    Navigator.popUntil(context, (route) => route.isFirst);
-                  } else {
-                    Navigator.popUntil(
-                        context, ModalRoute.withName(widget.originRoute));
-                  }
-                },
-                child: const Text('Finish'),
+          getOutputPromptView(),
+          AppletInputCard(
+            child: Text(widget.resultText),
+          ),
+          getInputView(),
+          Row(
+            children: [
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: OutlinedButton(
+                  onPressed: () {
+                    if (widget.originRoute.isEmpty) {
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                    } else {
+                      Navigator.popUntil(
+                          context, ModalRoute.withName(widget.originRoute));
+                    }
+                  },
+                  child: const Text('Finish'),
+                ),
               ),
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Retry'),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Retry'),
+                ),
               ),
-            ),
-            const Spacer(),
-          ],
-        ),
-      ],
+              const Spacer(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

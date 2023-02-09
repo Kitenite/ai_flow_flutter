@@ -291,9 +291,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: ElevatedButton(
                         onPressed: () {
-                          // Validate returns true if the form is valid, or false otherwise.
                           if (_formKey.currentState!.validate()) {
-                            // TODO: Push to RunScreen with the created applet
                             Navigator.push(
                               context,
                               MaterialPageRoute(
