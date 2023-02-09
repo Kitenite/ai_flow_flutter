@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
+import 'package:ai_flow/models/image_to_text_response.dart';
 import 'package:ai_flow/models/speech_to_text_request.dart';
 import 'package:ai_flow/models/speech_to_text_response.dart';
 import 'package:ai_flow/models/image_to_text_request.dart';
@@ -24,12 +24,10 @@ class ApiDataAccessor {
     );
 
     if (response.statusCode == 200) {
-      print('Response body: ${response.body}');
       TextToTextResponse responseObject =
           TextToTextResponse.fromJson(jsonDecode(response.body));
       return responseObject.response;
     } else {
-      print(response.body);
       throw Exception('Failed to get response.');
     }
   }
@@ -54,7 +52,6 @@ class ApiDataAccessor {
   }
 
   static Future<String> imageToText(File image) async {
-    print("HERE");
     List<int> imageBytes = await image.readAsBytes();
     String base64Image = base64Encode(imageBytes);
 
@@ -70,12 +67,12 @@ class ApiDataAccessor {
       body: jsonEncode(ImageToTextRequest(image: base64Image).toJson()),
     );
 
-    if (response.statusCode == 200) {
-      print('Response body: ${response.body}');
-      return response.body;
-    } else {
-      print(response.body);
-      throw Exception('Failed to get response.');
+    try {
+      ImageToTextResponse responseObject =
+          ImageToTextResponse.fromJson(jsonDecode(response.body));
+      return responseObject.transcript;
+    } catch (e) {
+      return "";
     }
   }
 }

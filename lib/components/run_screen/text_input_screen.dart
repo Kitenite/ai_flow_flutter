@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:ai_flow/components/common/applet_input_card.dart';
+import 'package:ai_flow/components/run_screen/image_to_text.dart';
 import 'package:ai_flow/components/run_screen/speech_to_text.dart';
 import 'package:ai_flow/models/applet.dart';
-import 'package:ai_flow/sao/api.dart';
-import 'package:ai_flow/utils/image_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TextInputScreen extends StatefulWidget {
@@ -29,28 +25,6 @@ class _TextInputScreenState extends State<TextInputScreen> {
   final List<bool> _expandedListItems = [false];
   var _submitButtonVisible = false;
   final _textInputController = TextEditingController();
-
-  void sendPicture(ImageSource source) async {
-    XFile? image = (await ImageHandler.pickImage(source));
-
-    if (image == null) {
-      print("Null image");
-      return;
-    }
-
-    CroppedFile? croppedImage =
-        (await ImageHandler.cropImage(File(image.path)));
-
-    if (croppedImage == null) {
-      return sendPicture(source);
-    }
-    String result = await ApiDataAccessor.imageToText(File(croppedImage.path));
-
-    setState(() {
-      _textInputController.text = result;
-      _submitButtonVisible = true;
-    });
-  }
 
   Widget getPromptView() {
     // If applet allows prompts to be displayed
@@ -113,34 +87,29 @@ class _TextInputScreenState extends State<TextInputScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(10),
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                ),
-                onPressed: () {
-                  sendPicture(ImageSource.camera);
+              ImageToText(
+                imageSource: ImageSource.camera,
+                finishedProcessingCallback: (String outputText) {
+                  setState(() {
+                    _textInputController.text = outputText;
+                    _submitButtonVisible = true;
+                  });
                 },
-                child: Icon(Icons.photo_camera),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(10),
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                ),
-                onPressed: () {
-                  sendPicture(ImageSource.gallery);
+              ImageToText(
+                imageSource: ImageSource.gallery,
+                finishedProcessingCallback: (String outputText) {
+                  setState(() {
+                    _textInputController.text = outputText;
+                    _submitButtonVisible = true;
+                  });
                 },
-                child: Icon(Icons.photo_library),
               ),
               SpeechToText(
                 finishedProcessingCallback: (String outputText) {
                   setState(() {
                     _textInputController.text = outputText;
+                    _submitButtonVisible = true;
                   });
                 },
               ),

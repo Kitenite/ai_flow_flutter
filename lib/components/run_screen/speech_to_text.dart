@@ -59,37 +59,36 @@ class _SpeechToTextState extends State<SpeechToText> {
     setState(() {
       _isProcessing = true;
     });
-    ApiDataAccessor.speechToText(File(fileUrl).readAsBytesSync())
-      .then((value) => {
+    ApiDataAccessor.speechToText(File(fileUrl).readAsBytesSync()).then(
+      (value) => {
         widget.finishedProcessingCallback(value),
         setState(() {
           _isProcessing = false;
         })
-      });
+      },
+    );
   }
 
   Widget getRecordingIcon() {
     if (_isProcessing) {
       return Container(
-        width: 24,
-        height: 24,
-        padding: const EdgeInsets.all(1),
-        child: const CircularProgressIndicator(
-          backgroundColor: Colors.white,
-          strokeWidth: 2,
-        )
-      );
+          width: 24,
+          height: 24,
+          padding: const EdgeInsets.all(1),
+          child: const CircularProgressIndicator(
+            backgroundColor: Colors.white,
+            strokeWidth: 2,
+          ));
     }
     if (_isRecording) {
       return Container(
-        width: 24,
-        height: 24,
-        padding: const EdgeInsets.all(4),
-        child: const LinearProgressIndicator(
-          backgroundColor: Colors.white,
-          color: Color.fromARGB(255, 255, 224, 224),
-        )
-      );
+          width: 24,
+          height: 24,
+          padding: const EdgeInsets.all(4),
+          child: const LinearProgressIndicator(
+            backgroundColor: Colors.white,
+            color: Color.fromARGB(255, 255, 224, 224),
+          ));
     }
     return const Icon(Icons.mic);
   }
@@ -97,25 +96,21 @@ class _SpeechToTextState extends State<SpeechToText> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        shape: const CircleBorder(),
-        padding: const EdgeInsets.all(10),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-      ),
-      onPressed: () {
-        if (_isRecording) {
-          stopRecording()
-            .then((fileUrl) => {
-              if (fileUrl != null) {
-                runSpeechToText(fileUrl)
-              }
-            });
-        } else {
-          startRecording();
-        }
-      },
-      child: getRecordingIcon()
-    );
+        style: ElevatedButton.styleFrom(
+          shape: const CircleBorder(),
+          padding: const EdgeInsets.all(10),
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+        ),
+        onPressed: () {
+          if (_isRecording) {
+            stopRecording().then((fileUrl) => {
+                  if (fileUrl != null) {runSpeechToText(fileUrl)}
+                });
+          } else {
+            startRecording();
+          }
+        },
+        child: getRecordingIcon());
   }
 }
