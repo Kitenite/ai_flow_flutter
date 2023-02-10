@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>716093299703-u4jt50j1tr7pt2l4udv6971ubpemla0o.apps.googleusercontent.com</string>
+	<string>716093299703-v1j1h3gdvsehq5nj6haq1o83o3fbhj58.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.716093299703-u4jt50j1tr7pt2l4udv6971ubpemla0o</string>
+	<string>com.googleusercontent.apps.716093299703-v1j1h3gdvsehq5nj6haq1o83o3fbhj58</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA_Fc9s4OTlP4dh0nlWWWg2pCiioRjDtKs</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.aiFlow</string>
+	<string>com.madebykiet.flow</string>
 	<key>PROJECT_ID</key>
 	<string>ai-flow-374403</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:716093299703:ios:af9f9df8d943bad149ecf2</string>
+	<string>1:716093299703:ios:eb1426d3397642cf49ecf2</string>
 </dict>
 </plist>
