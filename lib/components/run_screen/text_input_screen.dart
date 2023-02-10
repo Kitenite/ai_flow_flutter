@@ -55,6 +55,22 @@ class _TextInputScreenState extends State<TextInputScreen> {
     return const SizedBox.shrink();
   }
 
+  Widget getDescriptionView() {
+    if (widget.applet.description.isNotEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(15),
+        child: Text(
+          widget.applet.description,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+          ),
+        ),
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -68,6 +84,7 @@ class _TextInputScreenState extends State<TextInputScreen> {
               fontSize: 22,
             ),
           ),
+          getDescriptionView(),
           AppletInputCard(
             title: '${widget.applet.inputPrompt}:',
             child: TextFormField(
