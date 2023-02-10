@@ -19,7 +19,6 @@ class Applet {
   String id = UUIDUtil.createUUID();
   final String prompt;
   final String name;
-  final InputType inputType;
   final OutputType outputType;
 
   // Optional
@@ -31,7 +30,6 @@ class Applet {
   Applet({
     required this.prompt,
     required this.name,
-    required this.inputType,
     required this.outputType,
     this.description = "",
     this.inputPrompt = "",
@@ -43,14 +41,11 @@ class Applet {
   Map<String, dynamic> toJson() => _$AppletToJson(this);
 }
 
-enum InputType {
-  text,
-  image,
-  audio,
-}
-
 enum OutputType {
-  text,
-  image,
-  audio,
+  text("Text"),
+  image("Image"),
+  audio("Audio");
+
+  const OutputType(this.value);
+  final String value;
 }

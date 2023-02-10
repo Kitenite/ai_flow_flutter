@@ -10,13 +10,13 @@ class AppletPreviewButton extends StatelessWidget {
 
   final Applet applet;
 
-  IconData getAppIcon(InputType inputType) {
-    switch (inputType) {
-      case InputType.text:
+  IconData getAppIcon(OutputType outputType) {
+    switch (outputType) {
+      case OutputType.text:
         return Icons.edit_note;
-      case InputType.image:
+      case OutputType.image:
         return Icons.photo_library_outlined;
-      case InputType.audio:
+      case OutputType.audio:
         return Icons.mic;
     }
   }
@@ -54,7 +54,7 @@ class AppletPreviewButton extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(10.0),
                       child: Icon(
-                        getAppIcon(applet.inputType),
+                        getAppIcon(applet.outputType),
                       ),
                     ),
                   ),
