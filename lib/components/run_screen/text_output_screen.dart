@@ -1,4 +1,5 @@
 import 'package:ai_flow/components/common/applet_input_card.dart';
+import 'package:ai_flow/components/run_screen/text_to_speech.dart';
 import 'package:ai_flow/models/applet.dart';
 import 'package:flutter/material.dart';
 
@@ -85,6 +86,12 @@ class _TextOutputScreenState extends State<TextOutputScreen> {
           getOutputPromptView(),
           AppletInputCard(
             child: Text(widget.resultText),
+          ),
+          Center(
+            child: TextToSpeech(
+              text: widget.resultText,
+              autoSpeak: widget.applet.outputType == OutputType.audio,
+            ),
           ),
           getInputView(),
           Row(
