@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ai_flow">
    <application
-        android:label="ai_flow"
+        android:label="Ai Flow"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

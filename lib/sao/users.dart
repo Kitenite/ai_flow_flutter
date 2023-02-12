@@ -46,9 +46,10 @@ class UserDataAccessor {
     newUser.addCollectionId(newCollection.id);
 
     // Marketplaces
-    newUser.addCollectionId(Constants.marketplaceCollectionId);
     newUser.addCollectionId(Constants.writingCollectionId);
+    newUser.addCollectionId(Constants.foodCollectionId);
     newUser.addCollectionId(Constants.jokesCollectionId);
+    newUser.addCollectionId(Constants.codingCollectionId);
 
     // Save in db
     FirebaseFirestore.instance

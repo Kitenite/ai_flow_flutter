@@ -9,9 +9,10 @@ class Constants {
   static const String usersCollectionId = "users";
   static const String collectionsCollectionId = "collections";
   static const String appletsCollectionId = "applets";
-  static const String marketplaceCollectionId = "marketplaceTestCollection";
-  static const String jokesCollectionId = "jokesGenerator";
+  static const String jokesCollectionId = "jokes";
   static const String writingCollectionId = "writing";
+  static const String foodCollectionId = "food";
+  static const String codingCollectionId = "coding";
 
   // Shared preferences (local storage)
   static const String userIdPreference = "user_id";

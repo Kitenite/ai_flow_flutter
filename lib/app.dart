@@ -1,9 +1,7 @@
 import 'package:ai_flow/resources/constants.dart';
-import 'package:ai_flow/utils/db_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_flow/components/create_screen/create_screen.dart';
 import 'package:ai_flow/components/home_screen/home_screen.dart';
-import 'package:ai_flow/components/run_screen/run_screen.dart';
 import 'package:ai_flow/components/wait_screen/wait_screen.dart';
 
 class MainApp extends StatelessWidget {
@@ -21,9 +19,6 @@ class MainApp extends StatelessWidget {
         Constants.waitRoute: (context) => const WaitScreen(),
         Constants.homeRoute: (context) => const HomeScreen(),
         Constants.createRoute: (context) => const CreateScreen(),
-        Constants.runRoute: (context) => RunScreen(
-              applet: DatabaseMockHelpers.marketplaceApplets.first,
-            ),
       },
       debugShowCheckedModeBanner: false,
       // TODO: Add custom theme
