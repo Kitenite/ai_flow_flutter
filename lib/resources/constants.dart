@@ -10,6 +10,8 @@ class Constants {
   static const String collectionsCollectionId = "collections";
   static const String appletsCollectionId = "applets";
   static const String marketplaceCollectionId = "marketplaceTestCollection";
+  static const String jokesCollectionId = "jokesGenerator";
+  static const String writingCollectionId = "writing";
 
   // Shared preferences (local storage)
   static const String userIdPreference = "user_id";

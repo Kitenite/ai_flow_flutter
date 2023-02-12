@@ -44,7 +44,11 @@ class UserDataAccessor {
         Collection(name: "My Apps", collectionType: CollectionType.personal);
     CollectionDataAccessor.createNewCollection(newCollection);
     newUser.addCollectionId(newCollection.id);
+
+    // Marketplaces
     newUser.addCollectionId(Constants.marketplaceCollectionId);
+    newUser.addCollectionId(Constants.writingCollectionId);
+    newUser.addCollectionId(Constants.jokesCollectionId);
 
     // Save in db
     FirebaseFirestore.instance

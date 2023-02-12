@@ -26,6 +26,13 @@ class _TextInputScreenState extends State<TextInputScreen> {
   var _submitButtonVisible = false;
   final _textInputController = TextEditingController();
 
+  void finshedProcessingCallback(String outputText) {
+    setState(() {
+      _textInputController.text += outputText;
+      _submitButtonVisible = true;
+    });
+  }
+
   Widget getPromptView() {
     // If applet allows prompts to be displayed
     if (widget.applet.showPrompt) {
@@ -86,7 +93,7 @@ class _TextInputScreenState extends State<TextInputScreen> {
           ),
           getDescriptionView(),
           AppletInputCard(
-            title: '${widget.applet.inputPrompt}:',
+            title: widget.applet.inputPrompt,
             child: TextFormField(
               controller: _textInputController,
               autofocus: true,
@@ -106,29 +113,14 @@ class _TextInputScreenState extends State<TextInputScreen> {
             children: [
               ImageToText(
                 imageSource: ImageSource.camera,
-                finishedProcessingCallback: (String outputText) {
-                  setState(() {
-                    _textInputController.text = outputText;
-                    _submitButtonVisible = true;
-                  });
-                },
+                finishedProcessingCallback: finshedProcessingCallback,
               ),
               ImageToText(
                 imageSource: ImageSource.gallery,
-                finishedProcessingCallback: (String outputText) {
-                  setState(() {
-                    _textInputController.text = outputText;
-                    _submitButtonVisible = true;
-                  });
-                },
+                finishedProcessingCallback: finshedProcessingCallback,
               ),
               SpeechToText(
-                finishedProcessingCallback: (String outputText) {
-                  setState(() {
-                    _textInputController.text = outputText;
-                    _submitButtonVisible = true;
-                  });
-                },
+                finishedProcessingCallback: finshedProcessingCallback,
               ),
             ],
           ),
