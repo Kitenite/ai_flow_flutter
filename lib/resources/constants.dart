@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Constants {
   // Routes
   static const String homeRoute = "/home";
@@ -23,4 +25,16 @@ class Constants {
   static const String textToTextApiPath = "prod/txt2txt";
   static const String speechToTextApiPath = "prod/audio2txt";
   static const String imageToTextApiPath = "prod/img2txt";
+
+  // Icons
+  static List<IconData> icons = [
+    Icons.text_fields,
+    Icons.photo,
+    Icons.audiotrack,
+    Icons.book,
+    Icons.person,
+    Icons.soup_kitchen,
+    Icons.comment,
+    Icons.theater_comedy,
+  ];
 }

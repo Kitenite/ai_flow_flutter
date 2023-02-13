@@ -1,4 +1,5 @@
 import 'package:ai_flow/utils/uuid.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'applet.g.dart';
 
@@ -24,6 +25,7 @@ class Applet {
   final String description;
   final String inputPrompt;
   final bool showPrompt;
+  final int iconIndex;
 
   Applet({
     required this.prompt,
@@ -31,6 +33,7 @@ class Applet {
     this.description = "",
     this.inputPrompt = "",
     this.showPrompt = true,
+    this.iconIndex = 0,
   });
 
   factory Applet.fromJson(Map<String, dynamic> json) => _$AppletFromJson(json);

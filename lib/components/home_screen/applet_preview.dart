@@ -1,5 +1,6 @@
 import 'package:ai_flow/components/run_screen/run_screen.dart';
 import 'package:ai_flow/models/applet.dart';
+import 'package:ai_flow/resources/constants.dart';
 import 'package:flutter/material.dart';
 
 class AppletPreviewButton extends StatelessWidget {
@@ -9,10 +10,6 @@ class AppletPreviewButton extends StatelessWidget {
   });
 
   final Applet applet;
-
-  IconData getAppIcon() {
-    return Icons.edit_note;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +43,7 @@ class AppletPreviewButton extends StatelessWidget {
                   child: FittedBox(
                     child: Container(
                       padding: const EdgeInsets.all(10.0),
-                      child: Icon(
-                        getAppIcon(),
-                      ),
+                      child: Icon(Constants.icons[applet.iconIndex]),
                     ),
                   ),
                 ),

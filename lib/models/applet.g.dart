@@ -25,6 +25,7 @@ Applet _$AppletFromJson(Map<String, dynamic> json) => Applet(
       description: json['description'] as String? ?? "",
       inputPrompt: json['inputPrompt'] as String? ?? "",
       showPrompt: json['showPrompt'] as bool? ?? true,
+      iconIndex: json['iconIndex'] as int? ?? 0,
     )..id = json['id'] as String;
 
 Map<String, dynamic> _$AppletToJson(Applet instance) => <String, dynamic>{
@@ -34,4 +35,5 @@ Map<String, dynamic> _$AppletToJson(Applet instance) => <String, dynamic>{
       'description': instance.description,
       'inputPrompt': instance.inputPrompt,
       'showPrompt': instance.showPrompt,
+      'iconIndex': instance.iconIndex,
     };

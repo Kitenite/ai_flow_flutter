@@ -1,4 +1,5 @@
 import 'package:ai_flow/components/common/applet_input_card.dart';
+import 'package:ai_flow/components/common/icon_picker.dart';
 import 'package:ai_flow/components/run_screen/run_screen.dart';
 import 'package:ai_flow/models/applet.dart';
 import 'package:ai_flow/models/user.dart';
@@ -29,6 +30,8 @@ class CreateAppletFormState extends State<CreateAppletForm> {
   var _inputPromptFieldVisible = false;
   var _submitButtonVisible = false;
 
+  int _selectedIconIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +43,27 @@ class CreateAppletFormState extends State<CreateAppletForm> {
       name: _nameController.text,
       inputPrompt: _inputPromptController.text,
       description: _descriptionController.text,
+      iconIndex: _selectedIconIndex,
     );
+  }
+
+  Future<void> _showIconPickerDialog() async {
+    int iconIndexPicked = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          title: Text(
+            'Pick an icon',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: IconPicker(),
+        );
+      },
+    );
+
+    setState(() {
+      _selectedIconIndex = iconIndexPicked;
+    });
   }
 
   @override
@@ -131,15 +154,31 @@ class CreateAppletFormState extends State<CreateAppletForm> {
               ),
               AppletInputCard(
                 visible: _inputPromptFieldVisible,
-                title: "Input description",
+                title: "Optional: Input description",
                 child: TextFormField(
                   controller: _inputPromptController,
                   maxLines: null,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText:
-                        'Optional: Explain what the input should include',
+                    labelText: ' Explain what the input should include',
                     hintText: 'e.g. Input your list of ingredients',
+                  ),
+                ),
+              ),
+              AppletInputCard(
+                visible: _inputPromptFieldVisible,
+                title: "Optional: Display icon",
+                child: OutlinedButton(
+                  onPressed: _showIconPickerDialog,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Constants.icons[_selectedIconIndex]),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text("Pick a different icon"),
+                    ],
                   ),
                 ),
               ),
