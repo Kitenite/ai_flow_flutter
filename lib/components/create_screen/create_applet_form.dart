@@ -23,13 +23,8 @@ class CreateAppletFormState extends State<CreateAppletForm> {
   final _promptController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _inputPromptController = TextEditingController();
-  final _outputPromptController = TextEditingController();
-
-  OutputType _selectedOutputType = OutputType.text;
-  final List<bool> _outputTypeSelections = <bool>[true, false, false];
 
   var _promptFieldVisible = false;
-  var _outputFieldVisible = false;
   var _descriptionFormFieldVisible = false;
   var _inputPromptFieldVisible = false;
   var _submitButtonVisible = false;
@@ -43,9 +38,7 @@ class CreateAppletFormState extends State<CreateAppletForm> {
     return Applet(
       prompt: _promptController.text,
       name: _nameController.text,
-      outputType: _selectedOutputType,
       inputPrompt: _inputPromptController.text,
-      outputPrompt: _outputPromptController.text,
       description: _descriptionController.text,
     );
   }
@@ -130,7 +123,6 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                     if (value.isNotEmpty) {
                       setState(() {
                         _inputPromptFieldVisible = true;
-                        _outputFieldVisible = true;
                         _submitButtonVisible = true;
                       });
                     }
@@ -145,52 +137,10 @@ class CreateAppletFormState extends State<CreateAppletForm> {
                   maxLines: null,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: 'Optional: Explain what the input should include',
+                    labelText:
+                        'Optional: Explain what the input should include',
                     hintText: 'e.g. Input your list of ingredients',
                   ),
-                ),
-              ),
-              AppletInputCard(
-                visible: _outputFieldVisible,
-                title: "Output type",
-                child: Column(
-                  children: [
-                    const SizedBox(height:15),
-                    ToggleButtons(
-                      direction: Axis.horizontal,
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                      selectedBorderColor: Colors.blue,
-                      constraints: const BoxConstraints(
-                        minHeight: 40.0,
-                        minWidth: 100.0,
-                      ),
-                      onPressed: (int index) {
-                        setState(() {
-                          for (int i = 0; i < _outputTypeSelections.length; i++) {
-                            if (i == index) {
-                              _outputTypeSelections[i] = true;
-                              _selectedOutputType = OutputType.values[i];
-                            } else {
-                              _outputTypeSelections[i] = false;
-                            }
-                          }
-                        });
-                      },
-                      isSelected: _outputTypeSelections,
-                      children: OutputType.values.map((OutputType outputType) {
-                        return Text(outputType.value);
-                      }).toList(),
-                    ),
-                    TextFormField(
-                      controller: _outputPromptController,
-                      maxLines: null,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: 'Optional: Explain your app\'s output',
-                        hintText: 'e.g. Here\'s an explanation of your ingredients',
-                      ),
-                    ),
-                  ],
                 ),
               ),
               Row(

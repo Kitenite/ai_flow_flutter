@@ -45,29 +45,12 @@ class RunScreenState extends State<RunScreen> {
     String result = "",
     String inputText = "",
   }) {
-    switch (widget.applet.outputType) {
-      case OutputType.text:
-        return TextOutputScreen(
-          applet: widget.applet,
-          resultText: result,
-          inputText: inputText,
-          originRoute: widget.originRoute,
-        );
-      case OutputType.image:
-        return TextOutputScreen(
-          applet: widget.applet,
-          resultText: result,
-          inputText: inputText,
-          originRoute: widget.originRoute,
-        );
-      case OutputType.audio:
-        return TextOutputScreen(
-          applet: widget.applet,
-          resultText: result,
-          inputText: inputText,
-          originRoute: widget.originRoute,
-        );
-    }
+    return TextOutputScreen(
+      applet: widget.applet,
+      resultText: result,
+      inputText: inputText,
+      originRoute: widget.originRoute,
+    );
   }
 
   Widget getInputScreen() {

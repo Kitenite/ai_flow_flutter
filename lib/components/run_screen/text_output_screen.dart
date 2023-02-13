@@ -54,22 +54,6 @@ class _TextOutputScreenState extends State<TextOutputScreen> {
     return const SizedBox.shrink();
   }
 
-  Widget getOutputPromptView() {
-    if (widget.applet.outputPrompt.isNotEmpty) {
-      return Padding(
-        padding: const EdgeInsets.all(15),
-        child: Text(
-          widget.applet.outputPrompt,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-          ),
-        ),
-      );
-    }
-    return const SizedBox.shrink();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -83,14 +67,13 @@ class _TextOutputScreenState extends State<TextOutputScreen> {
               fontSize: 22,
             ),
           ),
-          getOutputPromptView(),
           AppletInputCard(
             child: Text(widget.resultText),
           ),
           Center(
             child: TextToSpeech(
               text: widget.resultText,
-              autoSpeak: widget.applet.outputType == OutputType.audio,
+              autoSpeak: false,
             ),
           ),
           getInputView(),

@@ -19,21 +19,17 @@ class Applet {
   String id = UUIDUtil.createUUID();
   final String prompt;
   final String name;
-  final OutputType outputType;
 
   // Optional
   final String description;
   final String inputPrompt;
-  final String outputPrompt;
   final bool showPrompt;
 
   Applet({
     required this.prompt,
     required this.name,
-    required this.outputType,
     this.description = "",
     this.inputPrompt = "",
-    this.outputPrompt = "",
     this.showPrompt = true,
   });
 

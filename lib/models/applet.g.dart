@@ -22,10 +22,8 @@ Map<String, dynamic> _$AppletCollectionToJson(AppletCollection instance) =>
 Applet _$AppletFromJson(Map<String, dynamic> json) => Applet(
       prompt: json['prompt'] as String,
       name: json['name'] as String,
-      outputType: $enumDecode(_$OutputTypeEnumMap, json['outputType']),
       description: json['description'] as String? ?? "",
       inputPrompt: json['inputPrompt'] as String? ?? "",
-      outputPrompt: json['outputPrompt'] as String? ?? "",
       showPrompt: json['showPrompt'] as bool? ?? true,
     )..id = json['id'] as String;
 
@@ -33,15 +31,7 @@ Map<String, dynamic> _$AppletToJson(Applet instance) => <String, dynamic>{
       'id': instance.id,
       'prompt': instance.prompt,
       'name': instance.name,
-      'outputType': _$OutputTypeEnumMap[instance.outputType]!,
       'description': instance.description,
       'inputPrompt': instance.inputPrompt,
-      'outputPrompt': instance.outputPrompt,
       'showPrompt': instance.showPrompt,
     };
-
-const _$OutputTypeEnumMap = {
-  OutputType.text: 'text',
-  OutputType.image: 'image',
-  OutputType.audio: 'audio',
-};
